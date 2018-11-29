@@ -1,0 +1,83 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  {{- with .Values.ingress.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+  {{- end }}
+  name: {{ template "opal.fullname" . }}
+  labels:
+    app: {{ template "opal.name" . }}
+    chart: {{ template "opal.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "opal.name" . }}
+      release: {{ .Release.Name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ template "opal.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: opal
+        {{- with .Values.opal }}
+          image: {{ .image.repository }}/{{ .image.name }}:{{ .image.tag }}
+          imagePullPolicy: {{ .image.pullPolicy }}
+          env:
+            - name: OPAL_ADMINISTRATOR_PASSWORD
+              value: "{{ .adminPassword }}"
+          ports:
+            - containerPort: {{ $.Values.service.port }}
+          {{- if $.Values.persistence.enabled }}
+          volumeMounts:
+          - name: opal-nfs
+            mountPath: /home/opal
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ $.Values.service.port }}
+            initialDelaySeconds: 60
+            periodSeconds: 5
+            failureThreshold: 25
+            successThreshold: 1
+          resources:
+{{ toYaml .resources | indent 12 }}
+        {{- end }}
+        - name: rserver
+        {{- with .Values.rserver }}
+          image: {{ .image.repository }}/{{ .image.name }}:{{ .image.tag }}
+          imagePullPolicy: {{ .image.pullPolicy }}
+          ports:
+            - containerPort: 6612
+            - containerPort: 6311
+          resources:
+{{ toYaml .resources | indent 12 }}
+        {{- end }}
+
+{{- if .Values.persistence.enabled }}
+      volumes:
+        - name: opal-nfs
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-{{ .Values.opal.persistence.claim }}
+{{- end }}
+
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

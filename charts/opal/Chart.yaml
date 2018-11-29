@@ -1,0 +1,12 @@
+apiVersion: v1
+appVersion: "1.0"
+description: Opal - helm stack (in BETA)
+name: opal
+version: 0.0.1
+sources:
+- https://git.webhosting.rug.nl/molgenis/thirdparty-ops-docker-helm.git
+icon: https://git.webhosting.rug.nl/molgenis/thirdparty-ops-docker-helm/
+home: https://obiba.org
+maintainers:
+- name: sidohaakma
+- name: fdlk

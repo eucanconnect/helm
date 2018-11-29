@@ -1,0 +1,31 @@
+
+categories:
+- MOLGENIS
+questions:
+- variable: rstudio.environment
+  label: Environment
+  default: development
+  type: enum
+  options:
+  - development
+  - test
+  - acceptence
+  - production
+  group: "Provisioning"
+- variable: rstudio.image.repository
+  label: Registry
+  default: "registry.hub.docker.com"
+  description: "Select a registry to pull from"
+  type: enum
+  options:
+  - "registry.hub.docker.com"
+  - "registry.molgenis.org"
+  required: true
+  group: "Provisioning"
+- variable: rstudio.image.tag
+  label: Version
+  default: ""
+  description: "Select a RStudio version (check the registry.molgenis.org or hub.docker.com for released tags)"
+  type: string
+  required: true
+  group: "Provisioning"

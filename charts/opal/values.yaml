@@ -1,0 +1,84 @@
+# Default values for molgenis.
+
+replicaCount: 1
+
+service:
+  name: opal
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  hosts:
+    - opal.dev.molgenis.org
+  path: /
+  tls: []
+
+opal:
+  advanced: false
+  javaOpts:
+    maxHeapSpace: "4g"
+  resources:
+    limits:
+    cpu: 1
+    memory: 2Gi
+  requests:
+    cpu: 200m
+    memory: 4Gi
+  persistence:
+    size: 10Gi
+  image:
+    repository: registry.hub.docker.com
+    name: obiba/opal
+    tag: latest
+    pullPolicy: Always
+  adminPassword: xxxxx
+  persistence:
+    claim: pvc-opal
+    size: 10Gi
+  containerPorts:
+    - 8080
+
+rserver:
+  image:
+    repository: registry.hub.docker.com
+    name: obiba/opal-rserver
+    tag: latest
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 1
+      memory: 2Gi
+  containerPorts:
+   - 6612
+   - 6311
+
+mysql:
+  persistence:
+    enabled: false
+  mysqlRootPassword: ParaD0xa
+  mysqlUser: opal
+  mysqlPassword: ?opal01!
+  initializationFiles:
+    opal-ids.sql: |-
+      CREATE DATABASE IF NOT EXISTS opal_ids DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+      GRANT ALL PRIVILEGES ON opal_ids.* TO "opal"@"%" IDENTIFIED BY "?opal01!";
+      FLUSH PRIVILEGES;
+    opal-data.sql: |-
+      CREATE DATABASE IF NOT EXISTS opal_data DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+      GRANT ALL PRIVILEGES ON opal_data.* TO "opal"@"%" IDENTIFIED BY "?opal01!";
+      FLUSH PRIVILEGES;
+
+persistence:
+  enabled: false
+  retain: false
+
+nodeSelector: {
+  deployPod: "true"
+}
+
+tolerations: []
+
+affinity: {}

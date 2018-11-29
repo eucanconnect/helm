@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  {{- with .Values.ingress.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+  {{- end }}
+  name: {{ template "rstudio.fullname" . }}
+  labels:
+    app: {{ template "rstudio.name" . }}
+    chart: {{ template "rstudio.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "rstudio.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "rstudio.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      {{- with .Values.rstudio }}
+      - name: {{ .name }}
+        image: "{{ .image.repository }}/{{ .image.name }}:{{ .image.tag }}"
+        imagePullPolicy: {{ .image.pullPolicy }}
+        env:
+        - name: PASSWORD
+          value: "{{ .adminPassword }}"
+        ports:
+        - containerPort: {{ .service.port }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .service.port }}
+          initialDelaySeconds: 60
+          periodSeconds: 5
+          failureThreshold: 25
+          successThreshold: 1
+      {{- end }}
+
+
