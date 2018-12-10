@@ -33,10 +33,10 @@ spec:
           value: "{{ .adminPassword }}"
         ports:
         - containerPort: {{ .service.port }}
-        {{ $.Values.persistence.enabled }}
+        {{ if $.Values.persistence.enabled }}
         volumeMounts:
         - name: rstudio-nfs
-          mountPath: /home/opal
+          mountPath: /home
         {{- end }}
         livenessProbe:
           httpGet:
@@ -55,7 +55,7 @@ spec:
             claimName: {{ .Release.Name }}-{{ .Values.rstudio.persistence.claim }}
 {{- end }}
 
- {{- with .Values.nodeSelector }}
+    {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
     {{- end }}
