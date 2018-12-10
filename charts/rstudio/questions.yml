@@ -50,11 +50,13 @@ questions:
   description: Add persistence to the RStudio instance
   type: boolean
   required: true
+  show_subquestion_if: true
   group: "Persistence"
-- variable: persistence.retain
-  label: Persistence retain
-  default: true
-  description: Should the volume be retained after POD-deletion
-  type: boolean
-  required: true
-  group: "Persistence"
+  subquestions:
+  - variable: persistence.retain
+    label: Persistence retain
+    default: true
+    description: Should the volume be retained after POD-deletion
+    type: boolean
+    required: true
+    group: "Persistence"
