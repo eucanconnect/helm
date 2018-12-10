@@ -29,6 +29,13 @@ questions:
   type: string
   required: true
   group: "Provisioning"
+- variable: opal.adminPassword
+  label: Password
+  default: ""
+  description: "Administrator password for Opal"
+  type: password
+  required: true
+  group: "Provisioning"
 - variable: persistence.enabled
   label: Persistence enabled
   default: true
