@@ -33,7 +33,7 @@ spec:
             - containerPort: {{ $.Values.service.port }}
           {{- if $.Values.persistence.enabled }}
           volumeMounts:
-          - name: opal-nfs
+          - name: pv-opal
             mountPath: /home/opal
           {{- end }}
           livenessProbe:
