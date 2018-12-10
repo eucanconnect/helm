@@ -15,6 +15,7 @@ questions:
   description: "Environment of Opal instance"
   type: enum
   options:
+   - edge
    - development
    - test
    - acceptance

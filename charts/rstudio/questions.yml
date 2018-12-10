@@ -14,9 +14,10 @@ questions:
   default: development
   type: enum
   options:
+  - edge
   - development
   - test
-  - acceptence
+  - acceptance
   - production
   group: "Provisioning"
 - variable: rstudio.image.repository
