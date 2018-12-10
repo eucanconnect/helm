@@ -78,7 +78,7 @@ This repository is serves also as a catalogue for Rancher. We have several apps 
 - [Opal](charts/opal/README.md)
 - [Opal](charts/rstudio/README.md)
 
-### Useful commands
+### Development
 You can you need to know to easily develop and deploy helm-charts
 
 - ```helm lint .```
