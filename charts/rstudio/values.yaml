@@ -14,7 +14,7 @@ rstudio:
   adminPassword: xxxxx
   persistence:
     size: 5Gi
-    claim: pv-rstudio
+    claim: pvc-rstudio
   image:
     repository: registry.hub.docker.com
     name: molgenis/rstudio
