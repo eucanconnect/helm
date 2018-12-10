@@ -37,6 +37,13 @@ questions:
   type: string
   required: true
   group: "Provisioning"
+- variable: rstudio.adminPassword
+  label: Password
+  default: ""
+  description: "Administrator password for RStudio"
+  type: password
+  required: true
+  group: "Provisioning"
 - variable: persistence.enabled
   label: Persistence enabled
   default: true
