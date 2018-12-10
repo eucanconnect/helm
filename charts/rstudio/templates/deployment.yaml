@@ -23,9 +23,8 @@ spec:
         app: {{ template "rstudio.name" . }}
         release: {{ .Release.Name }}
     spec:
-      containers:
       initContainers:
-      - name: nexus-nfs
+      - name: rstudio-nfs
         image: busybox
         command: ["sh", "-c", "chown -R rstudio:rstudio /home"]
         {{- if .Values.persistence.enabled }}
@@ -33,6 +32,7 @@ spec:
          - name: pv-rstudio
            mountPath: "/home"
         {{- end }}
+      containers:
       {{- with .Values.rstudio }}
       - name: {{ .name }}
         image: "{{ .image.repository }}/{{ .image.name }}:{{ .image.tag }}"
