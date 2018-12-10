@@ -6,7 +6,7 @@ kind: Ingress
 metadata:
   name: "{{ $.Release.Name }}-ingress"
   labels:
-    app: {{ $.Values.service.name }}
+    app: "{{ $.Release.Name }}-{{ $.Values.service.name }}"
     chart: "{{ $.Chart.Name }}-{{ $.Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
