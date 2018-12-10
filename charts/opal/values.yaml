@@ -54,8 +54,7 @@ rserver:
    - 6311
 
 mysql:
-  persistence:
-    enabled: false
+  persistence: *persistence
   mysqlRootPassword: xxxxx
   mysqlUser: opal
   mysqlPassword: xxxxx
@@ -69,7 +68,7 @@ mysql:
       GRANT ALL PRIVILEGES ON opal_data.* TO "opal"@"%" IDENTIFIED BY "?opal01!";
       FLUSH PRIVILEGES;
 
-persistence:
+persistence: &persistence
   enabled: false
   retain: false
 

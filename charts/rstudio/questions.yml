@@ -19,7 +19,6 @@ questions:
   - acceptence
   - production
   group: "Provisioning"
--
 - variable: rstudio.image.repository
   label: Registry
   default: "registry.hub.docker.com"
@@ -37,3 +36,17 @@ questions:
   type: string
   required: true
   group: "Provisioning"
+- variable: persistence.enabled
+  label: Persistence enabled
+  default: true
+  description: Add persistence to the RStudio instance
+  type: boolean
+  required: true
+  group: "Persistence"
+- variable: persistence.retain
+  label: Persistence retain
+  default: true
+  description: Should the volume be retained after POD-deletion
+  type: boolean
+  required: true
+  group: "Persistence"

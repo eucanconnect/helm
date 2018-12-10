@@ -38,7 +38,8 @@ ingress:
   tls: []
 
 persistence:
-  enaled: false
+  enabled: false
+  retain: false
 
 
 nodeSelector: {}
