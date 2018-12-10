@@ -29,6 +29,7 @@ opal:
     memory: 4Gi
   persistence:
     size: 10Gi
+    claim: opal-configuration
   image:
     repository: registry.hub.docker.com
     name: obiba/opal
@@ -58,9 +59,9 @@ rserver:
 mysql:
   persistence:
     enabled: false
-  mysqlRootPassword: ParaD0xa
+  mysqlRootPassword: xxxxx
   mysqlUser: opal
-  mysqlPassword: ?opal01!
+  mysqlPassword: xxxxx
   initializationFiles:
     opal-ids.sql: |-
       CREATE DATABASE IF NOT EXISTS opal_ids DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
