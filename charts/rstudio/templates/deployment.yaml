@@ -27,7 +27,8 @@ spec:
       initContainers:
       - name: rstudio-nfs
         image: busybox
-        command: ["sh", "-c", "chown -R rstudio:rstudio /home"]
+        command: ["sh", "-c", "chown -R 1000:1000 /home/rstudio"]
+        {{- if .Values.persistence.enabled }}
         volumeMounts:
          - name: pv-rstudio
            mountPath: "/home"
