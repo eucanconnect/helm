@@ -6,7 +6,7 @@ An RStudio instance to support DataSHIELD users in setting up a central analysis
 
 This chart will deploy the following container:
 
-- molgenis-rstudio (with DataSHIELD packages)
+- rstudio (with DataSHIELD packages)
 
 ## Provisioning
 You can choose for the RStudio image from which repository you want to pull. Experimental builds are pushed to registry.molgenis.org and the stable builds to hub.docker.com. 
@@ -17,17 +17,16 @@ You need to fill out 2 properties to determine which repository you are going to
 
 You can do this in the questions in Rancher or in the ```values.yaml```.
 
-## Development
-You can test in install the chart by executing:
+### Running the application
+You can use minikube to run this chart. To install minikube please check: https://kubernetes.io/docs/setup/minikube/.
 
-```helm lint .```
+Run the chart by installing it with helm this way: ```helm install .```.
 
-To test if your helm chart-syntax is right and:
+We use xip.io to resolve the local domain entry. Check the url: *.xip.io
 
-```helm install . --dry-run --debug```
+When you are using a cluster provisioning for domain resolving you can access the instance by default on: analysis.test.molgenis.org. 
 
-To test if your hem chart works and:
+## Persistence
+The persistence can be enabled by updating this value:
 
-```helm install .```
-
-To deploy it on the cluster.
+- ```rstudio.persistence.enabled```

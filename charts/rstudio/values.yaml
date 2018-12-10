@@ -12,11 +12,15 @@ rstudio:
     type: Recreate
   restartPolicy: Always
   adminPassword: xxxxx
+  persistence:
+    size: 5Gi
+    claim: rstudio-userdirs
   image:
     repository: registry.hub.docker.com
     name: molgenis/rstudio
     tag: beta
     pullPolicy: Always
+
   service:
     name: rstudio
     type: ClusterIP
@@ -30,8 +34,13 @@ ingress:
   }
   path: /
   hosts:
-  - name: analysis.dev.molgenis.org
+  - name: analysis.test.molgenis.org
   tls: []
+
+persistence:
+  enabled: false
+  retain: false
+
 
 nodeSelector: {}
 

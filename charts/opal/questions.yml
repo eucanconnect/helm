@@ -1,7 +1,14 @@
 
 categories:
-- OPAL
+- Opal
 questions:
+- variable: ingress.hosts[0].name
+  default: "xip.io"
+  description: "Opal hostname"
+  type: hostname
+  required: true
+  label: Hostname
+  group: Loadbalancing
 - variable: opal.environment
   label: Environment
   default: "test"
@@ -14,22 +21,25 @@ questions:
    - production
   required: true
   group: "Provisioning"
-- variable: molgenis.type.kind
-  label: Type
-  default: "medium"
-  description: "Type of MOLGENIS resources"
-  type: enum
-  options:
-   - small
-   - medium
-   - large
-  required: true
-  group: "Provisioning"
-- variable: molgenis.image.tag
+- variable: opal.image.tag
   label: Version
   default: "stable"
-  description: "Select a MOLGENIS version (check the registry.molgenis.org or hub.docker.com for released tags)"
+  description: "Select a Opal version (check hub.docker.com for released tags)"
   type: string
   required: true
   group: "Provisioning"
+- variable: persistence.enabled
+  label: Persistence enabled
+  default: true
+  description: Add persistence to the Opal instance
+  type: boolean
+  required: true
+  group: "Persistence"
+- variable: persistence.retain
+  label: Persistence retain
+  default: true
+  description: Should the volume be retained after POD-deletion
+  type: boolean
+  required: true
+  group: "Persistence"
 
