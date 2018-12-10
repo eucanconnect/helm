@@ -28,17 +28,14 @@ opal:
     cpu: 200m
     memory: 4Gi
   persistence:
+    claim: pvc-opal
     size: 10Gi
-    claim: opal-configuration
   image:
     repository: registry.hub.docker.com
     name: obiba/opal
     tag: latest
     pullPolicy: Always
   adminPassword: xxxxx
-  persistence:
-    claim: pvc-opal
-    size: 10Gi
   containerPorts:
     - 8080
 
