@@ -34,7 +34,7 @@ ingress:
   }
   path: /
   hosts:
-  - name: analysis.dev.molgenis.org
+  - name: analysis.test.molgenis.org
   tls: []
 
 persistence:

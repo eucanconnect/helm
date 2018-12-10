@@ -17,6 +17,15 @@ You need to fill out 2 properties to determine which repository you are going to
 
 You can do this in the questions in Rancher or in the ```values.yaml```.
 
+### Running the application
+You can use minikube to run this chart. To install minikube please check: https://kubernetes.io/docs/setup/minikube/.
+
+Run the chart by installing it with helm this way: ```helm install .```.
+
+We use xip.io to resolve the local domain entry. Check the url: *.xip.io
+
+When you are using a cluster provisioning for domain resolving you can access the instance by default on: analysis.test.molgenis.org. 
+
 ## Persistence
 The persistence can be enabled by updating this value:
 
