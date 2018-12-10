@@ -23,6 +23,7 @@ spec:
         app: {{ template "rstudio.name" . }}
         release: {{ .Release.Name }}
     spec:
+      {{ if .Values.persistence.enabled }}
       initContainers:
       - name: rstudio-nfs
         image: busybox
@@ -31,7 +32,7 @@ spec:
         volumeMounts:
          - name: pv-rstudio
            mountPath: "/home"
-        {{- end }}
+      {{- end }}
       containers:
       {{- with .Values.rstudio }}
       - name: {{ .name }}
