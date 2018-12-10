@@ -27,7 +27,7 @@ spec:
       initContainers:
       - name: rstudio-nfs
         image: busybox
-        command: ["sh", "-c", "chown -R 1000:1000 /home"]
+        command: ["sh", "-c", "mkdir -p /home/rstudio/; chown -R 1000:1000 /home/rstudio"]
         volumeMounts:
          - name: pv-rstudio
            mountPath: "/home"
