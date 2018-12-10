@@ -24,6 +24,15 @@ spec:
         release: {{ .Release.Name }}
     spec:
       containers:
+      initContainers:
+      - name: nexus-nfs
+        image: busybox
+        command: ["sh", "-c", "chown -R rstudio:rstudio /home"]
+        {{- if .Values.persistence.enabled }}
+        volumeMounts:
+         - name: pv-rstudio
+           mountPath: "/home"
+        {{- end }}
       {{- with .Values.rstudio }}
       - name: {{ .name }}
         image: "{{ .image.repository }}/{{ .image.name }}:{{ .image.tag }}"
@@ -35,7 +44,7 @@ spec:
         - containerPort: {{ .service.port }}
         {{ if $.Values.persistence.enabled }}
         volumeMounts:
-        - name: rstudio-nfs
+        - name: pv-rstudio
           mountPath: /home
         {{- end }}
         livenessProbe:
@@ -50,7 +59,7 @@ spec:
 
 {{- if .Values.persistence.enabled }}
       volumes:
-        - name: rstudio-nfs
+        - name: pv-rstudio
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-{{ .Values.rstudio.persistence.claim }}
 {{- end }}
