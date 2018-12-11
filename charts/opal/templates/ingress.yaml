@@ -1,6 +1,5 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "opal.fullname" . -}}
-{{- $ingressPath := .Values.ingress.path -}}
+{{- range .Values.ingress.hosts }}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -10,31 +9,28 @@ metadata:
     chart: "{{ $.Chart.Name }}-{{ $.Chart.Version }}"
     release: "{{ $.Release.Name }}"
     heritage: "{{ $.Release.Service }}"
-{{- with .Values.ingress.annotations }}
   annotations:
-{{ toYaml . | indent 4 }}
-{{- end }}
-spec:
-{{- if .Values.ingress.tls }}
-  tls:
-  {{- range .Values.ingress.tls }}
-    - hosts:
-      {{- range .hosts }}
-        - {{ . }}
-      {{- end }}
-      secretName: {{ .secretName }}
+  {{- if .tls }}
+    ingress.kubernetes.io/secure-backends: "true"
   {{- end }}
-{{- end }}
+  {{- range $key, $value := .annotations }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}
+spec:
   rules:
-  {{- if .Values.ingress.hosts }}
-  {{- range $host := .Values.ingress.hosts }}
-    - host: {{ $host }}
+    - host: {{ .name }}
       http:
         paths:
-          - path: {{ $ingressPath }}
+          - path: {{ default "/" .path }}
             backend:
               serviceName: "{{ $.Release.Name }}-{{ $.Values.service.name }}"
               servicePort: {{ $.Values.service.port }}
-  {{- end }}
-  {{- end }}
+{{- if .tls }}
+  tls:
+  - hosts:
+    - {{ .name }}
+    secretName: {{ .tlsSecret }}
+{{- end }}
+---
+{{- end }}
 {{- end }}
