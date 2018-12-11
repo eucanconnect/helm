@@ -11,7 +11,7 @@ questions:
   group: Loadbalancing
 - variable: opal.environment
   label: Environment
-  default: "test"
+  default: development
   description: "Environment of Opal instance"
   type: enum
   options:
@@ -23,9 +23,16 @@ questions:
   required: true
   group: "Provisioning"
 - variable: opal.image.tag
-  label: Version
-  default: "stable"
-  description: "Select a Opal version (check hub.docker.com for released tags)"
+  label: Opal version
+  default: "latest"
+  description: "Select a Opal version (check hub.docker.com/obiba for released tags)"
+  type: string
+  required: true
+  group: "Provisioning"
+- variable: rserver.image.tag
+  label: RServer version
+  default: "latest"
+  description: "Select a RServer version (check hub.docker.com/obiba for released tags)"
   type: string
   required: true
   group: "Provisioning"
