@@ -60,9 +60,9 @@ spec:
 
 {{- if .Values.persistence.enabled }}
       volumes:
-        - name: opal-nfs
+        - name: pv-opal
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-{{ .Values.opal.persistence.claim }}
+            claimName: "{{ .Release.Name }}-{{ .Values.opal.persistence.claim }}"
 {{- end }}
 
     {{- with .Values.nodeSelector }}
