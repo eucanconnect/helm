@@ -5,7 +5,7 @@ kind: Ingress
 metadata:
   name: "{{ $.Release.Name }}-ingress"
   labels:
-    app:  "{{ $.Release.Name}}-{{ $.Values.rstudio.service.name }}"
+    app:  "{{ $.Release.Name}}-{{ $.Values.service.name }}"
     chart: "{{ $.Chart.Name }}-{{ $.Chart.Version }}"
     release: "{{ $.Release.Name }}"
     heritage: "{{ $.Release.Service }}"
@@ -23,8 +23,8 @@ spec:
       paths:
         - path: {{ default "/" .path }}
           backend:
-            serviceName: "{{ $.Release.Name}}-{{ $.Values.rstudio.service.name }}"
-            servicePort: {{ $.Values.rstudio.service.port }}
+            serviceName: "{{ $.Release.Name}}-{{ $.Values.service.name }}"
+            servicePort: {{ $.Values.service.port }}
 {{- if .tls }}
   tls:
   - hosts:

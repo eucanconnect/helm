@@ -22,8 +22,8 @@ spec:
         release: {{ .Release.Name }}
     spec:
       containers:
-        - name: opal
         {{- with .Values.opal }}
+        - name: {{ .name }}
           image: {{ .image.repository }}/{{ .image.name }}:{{ .image.tag }}
           imagePullPolicy: {{ .image.pullPolicy }}
           env:
