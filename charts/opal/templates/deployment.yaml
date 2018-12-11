@@ -27,10 +27,10 @@ spec:
           image: {{ .image.repository }}/{{ .image.name }}:{{ .image.tag }}
           imagePullPolicy: {{ .image.pullPolicy }}
           env:
-          - name: OPAL_ADMINISTRATOR_PASSWORD
-            value: "{{ .adminPassword }}"
+           - name: OPAL_ADMINISTRATOR_PASSWORD
+             value: "{{ .adminPassword }}"
           ports:
-          - containerPort: {{ $.Values.service.port }}
+           - containerPort: {{ $.Values.service.port }}
           {{- if $.Values.persistence.enabled }}
           volumeMounts:
           - name: pv-opal
@@ -42,7 +42,7 @@ spec:
             httpGet:
               path: /
               port: {{ $.Values.service.port }}
-            initialDelaySeconds: 60
+            initialDelaySeconds: 80
             periodSeconds: 5
             failureThreshold: 25
             successThreshold: 1
@@ -52,8 +52,8 @@ spec:
           image: {{ .image.repository }}/{{ .image.name }}:{{ .image.tag }}
           imagePullPolicy: {{ .image.pullPolicy }}
           ports:
-            - containerPort: 6612
-            - containerPort: 6311
+           - containerPort: 6612
+           - containerPort: 6311
           resources:
 {{ toYaml .resources | indent 12 }}
         {{- end }}

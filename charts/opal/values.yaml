@@ -53,12 +53,9 @@ rserver:
    - 6612
    - 6311
 
-persistence: &persistence
-  enabled: false
-  retain: false
-
 mysql:
-  persistence: *persistence
+  persistence:
+    enabled: false
   mysqlRootPassword: xxxxx
   mysqlUser: opal
   mysqlPassword: xxxxx
@@ -71,6 +68,10 @@ mysql:
       CREATE DATABASE IF NOT EXISTS opal_data DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
       GRANT ALL PRIVILEGES ON opal_data.* TO "opal"@"%" IDENTIFIED BY "?opal01!";
       FLUSH PRIVILEGES;
+
+persistence:
+  enabled: false
+  retain: false
 
 nodeSelector: {
   deployPod: "true"
