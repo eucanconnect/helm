@@ -44,7 +44,7 @@ questions:
   required: true
   group: "Provisioning"
 - variable: persistence.enabled
-  label: Persistence enabled
+  label: Persistence enabled (for Opal)
   default: true
   description: Add persistence to the Opal instance
   type: boolean
@@ -59,4 +59,11 @@ questions:
     type: boolean
     required: true
     group: "Persistence"
+- variable: mysql.persistence.enabled
+  label: Persistence enabled (for MySQL)
+  default: true
+  description: Add persistence to the MySQL instance
+  type: boolean
+  required: true
+  group: "Persistence"
 
