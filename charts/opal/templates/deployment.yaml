@@ -22,20 +22,22 @@ spec:
         release: {{ .Release.Name }}
     spec:
       containers:
-        - name: opal
         {{- with .Values.opal }}
+        - name: {{ .name }}
           image: {{ .image.repository }}/{{ .image.name }}:{{ .image.tag }}
           imagePullPolicy: {{ .image.pullPolicy }}
           env:
-            - name: OPAL_ADMINISTRATOR_PASSWORD
-              value: "{{ .adminPassword }}"
+          - name: OPAL_ADMINISTRATOR_PASSWORD
+            value: "{{ .adminPassword }}"
           ports:
-            - containerPort: {{ $.Values.service.port }}
+          - containerPort: {{ $.Values.service.port }}
           {{- if $.Values.persistence.enabled }}
           volumeMounts:
           - name: pv-opal
             mountPath: /home/opal
           {{- end }}
+          resources:
+{{ toYaml .resources | indent 12 }}
           livenessProbe:
             httpGet:
               path: /
@@ -44,8 +46,6 @@ spec:
             periodSeconds: 5
             failureThreshold: 25
             successThreshold: 1
-          resources:
-{{ toYaml .resources | indent 12 }}
         {{- end }}
         - name: rserver
         {{- with .Values.rserver }}

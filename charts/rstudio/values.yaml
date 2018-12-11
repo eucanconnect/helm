@@ -21,10 +21,10 @@ rstudio:
     tag: beta
     pullPolicy: Always
 
-  service:
-    name: rstudio
-    type: ClusterIP
-    port: 8787
+service:
+  name: rstudio
+  type: ClusterIP
+  port: 8787
 
 ingress:
   enabled: true
