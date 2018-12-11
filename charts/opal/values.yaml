@@ -12,7 +12,7 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
   hosts:
-    - opal.test.molgenis.org
+    - name: opal.test.molgenis.org
   path: /
   tls: []
 
