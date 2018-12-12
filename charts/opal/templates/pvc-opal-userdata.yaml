@@ -3,7 +3,7 @@ apiVersion: extensions/v1beta1
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ .Release.Name }}-{{ .Values.opal.persistence.claim }}
+  name: {{ .Release.Name }}-{{ .Values.opal.persistence.claim.userdata }}
   annotations:
     {{- if .Values.persistence.retain }}
     volume.beta.kubernetes.io/storage-class: "nfs-provisioner-retain"

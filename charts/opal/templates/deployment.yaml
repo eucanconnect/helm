@@ -33,8 +33,10 @@ spec:
            - containerPort: {{ $.Values.service.port }}
           {{- if $.Values.persistence.enabled }}
           volumeMounts:
-          - name: pv-opal
-            mountPath: /home/opal
+          - name: pv-opal-userdata
+            mountPath: /home
+          - name: pv-opal-home
+            mountPath: /var/lib/opal
           {{- end }}
           resources:
 {{ toYaml .resources | indent 12 }}
@@ -60,9 +62,12 @@ spec:
 
 {{- if .Values.persistence.enabled }}
       volumes:
-        - name: pv-opal
+        - name: pv-opal-userdata
           persistentVolumeClaim:
-            claimName: "{{ .Release.Name }}-{{ .Values.opal.persistence.claim }}"
+            claimName: "{{ .Release.Name }}-{{ .Values.opal.persistence.claim.userdata }}"
+        - name: pv-opal-home
+          persistentVolumeClaim:
+            claimName: "{{ .Release.Name }}-{{ .Values.opal.persistence.claim.home }}"
 {{- end }}
 
     {{- with .Values.nodeSelector }}
