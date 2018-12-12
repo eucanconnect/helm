@@ -6,6 +6,11 @@ replicaCount: 1
 
 environment: production
 
+service:
+  name: rstudio
+  type: ClusterIP
+  port: 8787
+
 rstudio:
   name: rstudio
   strategy:
@@ -20,11 +25,6 @@ rstudio:
     name: molgenis/rstudio
     tag: beta
     pullPolicy: Always
-
-service:
-  name: rstudio
-  type: ClusterIP
-  port: 8787
 
 ingress:
   enabled: true
