@@ -28,7 +28,9 @@ opal:
       cpu: 200m
       memory: 2Gi
   persistence:
-    claim: pvc-opal
+    claim:
+      userdata: pvc-opal-userdata
+      home: pvc-opal-home
     size: 10Gi
   image:
     repository: registry.hub.docker.com

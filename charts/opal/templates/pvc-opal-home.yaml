@@ -1,0 +1,19 @@
+{{- if .Values.persistence.enabled -}}
+apiVersion: extensions/v1beta1
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.opal.persistence.claim.home }}
+  annotations:
+    {{- if .Values.persistence.retain }}
+    volume.beta.kubernetes.io/storage-class: "nfs-provisioner-retain"
+    {{- else }}
+    volume.beta.kubernetes.io/storage-class: "nfs-provisioner"
+    {{- end }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.opal.persistence.size }}
+{{- end }}
