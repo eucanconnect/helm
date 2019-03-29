@@ -1,11 +1,24 @@
 # DataSHIELD - Helm templates
 
 These are the Helm templates that we will use for DataSHIELD operations. 
- 
-## Kubernetes
+
+## Content
+This deployment repository consists of 3 charts. 
+
+- **Opal**
+
+  Opal depends on: mongodb, mysql and rserver. You can choose to deploy MySQL or MongoDB and you have to deploy RServer. The last one is mandatory dependency. 
+- **RServer**
+
+  This is the R environment used for all the DataSHIElD actions.
+- **RStudio**
+
+  This will be the analysis server.
+
+## Deployment
 When you want to use kubernetes there are some commands you need to know. Also running on a remote cluster will be a must have to control your whole DTAP.
 
-### Basic concepts
+### Basic concepts kubernetes
 Basic concepts in respect to docker you need to know.
 
 **Deployments**

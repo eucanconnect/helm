@@ -31,16 +31,15 @@ spec:
            mountPath: "/home"
       {{- end }}
       containers:
-      {{- with .Values.rstudio }}
-      - name: {{ .name }}
-        image: "{{ .image.repository }}/{{ .image.name }}:{{ .image.tag }}"
-        imagePullPolicy: {{ .image.pullPolicy }}
+      - name: rstudio
+        image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
         - name: PASSWORD
-          value: "{{ .adminPassword }}"
+          value: "{{ .Values.adminPassword }}"
         ports:
-        - containerPort: {{ $.Values.service.port }}
-        {{ if $.Values.persistence.enabled }}
+        - containerPort: {{ .Values.service.port }}
+        {{ if .Values.persistence.enabled }}
         volumeMounts:
         - name: pv-rstudio
           mountPath: /home
@@ -48,18 +47,17 @@ spec:
         livenessProbe:
           httpGet:
             path: /
-            port: {{ $.Values.service.port }}
+            port: {{ .Values.service.port }}
           initialDelaySeconds: 60
           periodSeconds: 5
           failureThreshold: 25
           successThreshold: 1
-      {{- end }}
 
 {{- if .Values.persistence.enabled }}
       volumes:
         - name: pv-rstudio
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-{{ .Values.rstudio.persistence.claim }}
+            claimName: {{ include "rstudio.fullname" . }}
 {{- end }}
 
     {{- with .Values.nodeSelector }}
