@@ -21,64 +21,85 @@ spec:
         app: {{ template "opal.name" . }}
         release: {{ .Release.Name }}
     spec:
-      containers:
-        {{- with .Values.opal }}
-        - name: {{ .name }}
-          image: {{ .image.repository }}/{{ .image.name }}:{{ .image.tag }}
-          imagePullPolicy: {{ .image.pullPolicy }}
-          env:
-           - name: OPAL_ADMINISTRATOR_PASSWORD
-             value: "{{ .adminPassword }}"
-          ports:
-           - containerPort: {{ $.Values.service.port }}
-          {{- if $.Values.persistence.enabled }}
+      initContainers:
+        - name: copy-config
+          image: busybox
+          command: ['sh', '-c', 'yes | cp /root/*.properties /data/.']
           volumeMounts:
-          - name: pv-opal-userdata
-            mountPath: /home
-          - name: pv-opal-home
-            mountPath: /var/lib/opal
-          {{- end }}
+            - name: opal-configmap
+              mountPath: /root/
+            - name: opal-configdir
+              mountPath: /data/
+      containers:
+        - name: opal
+          lifecycle:
+            postStart:
+              exec:
+                command: ['sh', '-c', 'yes | cp /data/*.properties /srv/conf/. && yes | cp /data/*.properties /usr/share/opal/conf/.;']
+          image: {{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: OPAL_ADMINISTRATOR_PASSWORD
+              value: "{{ .Values.adminPassword }}"
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          volumeMounts:
+            - name: pv-user
+              mountPath: /home
+            - name: pv-app
+              mountPath: /var/lib/opal
+            - name: opal-configdir
+              mountPath: /data
           resources:
-{{ toYaml .resources | indent 12 }}
+{{ toYaml .Values.resources | indent 12 }}
           livenessProbe:
             httpGet:
               path: /
-              port: {{ $.Values.service.port }}
+              port: {{ .Values.service.port }}
             initialDelaySeconds: 80
             periodSeconds: 5
             failureThreshold: 25
             successThreshold: 1
-        {{- end }}
-        - name: rserver
-        {{- with .Values.rserver }}
-          image: {{ .image.repository }}/{{ .image.name }}:{{ .image.tag }}
-          imagePullPolicy: {{ .image.pullPolicy }}
-          ports:
-           - containerPort: 6612
-           - containerPort: 6311
-          resources:
-{{ toYaml .resources | indent 12 }}
-        {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
 
-{{- if .Values.persistence.enabled }}
       volumes:
-        - name: pv-opal-userdata
+        - name: opal-configdir
+          emptyDir: {}
+        - name: opal-configmap
+          configMap:
+            name: {{ template "opal.fullname" . }}-config
+            key: opal-config.properties
+        - name: pv-user
+      {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: "{{ .Release.Name }}-{{ .Values.opal.persistence.claim.userdata }}"
-        - name: pv-opal-home
+            claimName: {{ include "opal.fullname" . }}-user
+      {{- else }}
+          emptyDir: {}
+      {{- end }}
+        - name: pv-app
+      {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: "{{ .Release.Name }}-{{ .Values.opal.persistence.claim.home }}"
-{{- end }}
+            claimName: {{ include "opal.fullname" . }}-app
+      {{- else }}
+          emptyDir: {}
+      {{- end }}
 
-    {{- with .Values.nodeSelector }}
-      nodeSelector:
-{{ toYaml . | indent 8 }}
+  {{- with .Values.nodeSelector }}
+nodeSelector:
+  {{ toYaml . | indent 8 }}
     {{- end }}
     {{- with .Values.affinity }}
-      affinity:
-{{ toYaml . | indent 8 }}
+affinity:
+  {{ toYaml . | indent 8 }}
     {{- end }}
     {{- with .Values.tolerations }}
-      tolerations:
-{{ toYaml . | indent 8 }}
+tolerations:
+  {{ toYaml . | indent 8 }}
     {{- end }}

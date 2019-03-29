@@ -3,7 +3,6 @@
 replicaCount: 1
 
 service:
-  name: opal
   type: ClusterIP
   port: 8080
 
@@ -11,51 +10,56 @@ ingress:
   enabled: true
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
-  hosts:
-   - name: opal.test.molgenis.org
+  host: opal.test.molgenis.org
   path: /
   tls: []
 
-opal:
-  name: opal
-  javaOpts:
-    maxHeapSpace: "4g"
-  resources:
-    limits:
-      cpu: 1
-      memory: 2Gi
-    requests:
-      cpu: 200m
-      memory: 2Gi
-  persistence:
-    claim:
-      userdata: pvc-opal-userdata
-      home: pvc-opal-home
-    size: 10Gi
+javaOpts:
+  maxHeapSpace: "3g"
+resources:
+  limits:
+    cpu: 4
+    memory: 4Gi
+  requests:
+    cpu: 200m
+    memory: 4Gi
+image:
+  repository: registry.hub.docker.com
+  name: obiba/opal
+  tag: 2.13
+  pullPolicy: Always
+adminPassword: xxxxx
+persistence:
+  enabled: false
+  user:
+    storageClass: ""
+    accessMode: ReadWriteMany
+    size: 50Gi
+    # existingClaim: ""
+  app:
+    storageClass: ""
+    accessMode: ReadWriteMany
+    size: 50Gi
+    # existingClaim: ""
+
+bootstrapper:
   image:
-    repository: registry.hub.docker.com
-    name: obiba/opal
+    repository: registry.molgenis.org
+    name: datashield/opal-bootstrapper
     tag: latest
     pullPolicy: Always
-  adminPassword: xxxxx
-  containerPorts:
-    - 8080
 
 rserver:
-  image:
-    repository: registry.hub.docker.com
-    name: obiba/opal-rserver
-    tag: latest
-    pullPolicy: IfNotPresent
-  resources:
-    limits:
-      cpu: 1
-      memory: 2Gi
-  containerPorts:
-   - 6612
-   - 6311
+  enabled: true
+
+mongodb:
+  enabled: false
+  usePassword: false
+  persistence:
+    enabled: false
 
 mysql:
+  enabled: false
   persistence:
     enabled: false
   mysqlRootPassword: xxxxx
@@ -70,10 +74,6 @@ mysql:
       CREATE DATABASE IF NOT EXISTS opal_data DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
       GRANT ALL PRIVILEGES ON opal_data.* TO "opal"@"%" IDENTIFIED BY "?opal01!";
       FLUSH PRIVILEGES;
-
-persistence:
-  enabled: false
-  retain: false
 
 nodeSelector: {
   deployPod: "true"

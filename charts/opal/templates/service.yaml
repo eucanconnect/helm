@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: "{{ .Release.Name }}-{{ .Values.service.name }}"
+  name: {{ template "opal.fullname" . }}
   labels:
-    app: "{{ .Release.Name }}-{{ .Values.service.name }}"
+    app: {{ template "opal.name" . }}
     chart: {{ template "opal.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - name: "{{ .Release.Name }}-{{ .Values.service.name }}"
+    - name: opal
       port: {{ .Values.service.port }}
   selector:
     app: {{ template "opal.name" . }}

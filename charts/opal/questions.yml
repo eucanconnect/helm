@@ -1,89 +1,104 @@
-
 categories:
-- Opal
+  - Opal
 questions:
-- variable: ingress.hosts[0].name
-  default: "xip.io"
-  description: "Opal hostname"
-  type: hostname
-  required: true
-  label: Hostname
-  group: Loadbalancing
-- variable: opal.environment
-  label: Environment
-  default: development
-  description: "Environment of Opal instance"
-  type: enum
-  options:
-   - edge
-   - development
-   - test
-   - acceptance
-   - production
-  required: true
-  group: "Provisioning"
-- variable: opal.image.tag
-  label: Opal version
-  default: "latest"
-  description: "Select a Opal version (check hub.docker.com/obiba for released tags)"
-  type: string
-  required: true
-  group: "Provisioning"
-- variable: rserver.image.tag
-  label: RServer version
-  default: "latest"
-  description: "Select a RServer version (check hub.docker.com/obiba for released tags)"
-  type: string
-  required: true
-  group: "Provisioning"
-- variable: opal.adminPassword
-  label: Password
-  default: ""
-  description: "Administrator password for Opal"
-  type: password
-  required: true
-  group: "Provisioning"
-- variable: persistence.enabled
-  label: Persistence enabled (for Opal)
-  default: true
-  description: Add persistence to the Opal instance
-  type: boolean
-  required: true
-  show_subquestion_if: true
-  group: "Persistence"
-  subquestions:
-  - variable: persistence.retain
-    label: Persistence retain
+  - variable: ingress.host
+    default: "xip.io"
+    description: "Opal hostname"
+    type: hostname
+    required: true
+    label: Hostname
+    group: Loadbalancing
+  - variable: image.tag
+    label: Opal version
+    default: "latest"
+    description: "Select a Opal version (check hub.docker.com/obiba for released tags)"
+    type: string
+    required: true
+    group: "Provisioning"
+  - variable: adminPassword
+    label: Password
+    default: ""
+    description: "Administrator password for Opal"
+    type: password
+    required: true
+    group: "Provisioning"
+  - variable: persistence.enabled
+    label: Persistence enabled (for Opal)
     default: true
-    description: Should the volume be retained after POD-deletion
+    description: Add persistence to the Opal instance
     type: boolean
     required: true
+    show_subquestion_if: true
     group: "Persistence"
-- variable: mysql.persistence.enabled
-  label: Persistence enabled (for MySQL)
-  default: true
-  description: Add persistence to the MySQL instance
-  type: boolean
-  required: true
-  group: "Persistence"
-- variable: mysql.mysqlRootPassword
-  label: MySQL root password
-  default: ""
-  description: Add MySQL root password (for MySQL in general)
-  type: password
-  required: true
-  group: "MySQL"
-- variable: mysql.mysqlUser
-  label: MySQL username
-  default: "opal"
-  description: Add MySQL user (for Opal)
-  type: string
-  required: true
-  group: "MySQL"
-- variable: mysql.mysqlPassword
-  label: MySQL user password
-  default: ""
-  description: Add MySQL user password (for Opal)
-  type: password
-  required: true
-  group: "MySQL"
+    subquestions:
+      - variable: persistence.retain
+        label: Persistence retain
+        description: Should the volume be retained after POD-deletion
+        type: storageclass
+        required: false
+        group: "Persistence"
+  - variable: rserver.image.tag
+    label: RServer version
+    default: "latest"
+    description: "Select a RServer version (check hub.docker.com/obiba for released tags)"
+    type: string
+    required: true
+    group: "Services"
+  - variable: mysql.enabled
+    label: MySQL is enabled
+    default: false
+    type: boolean
+    required: true
+    group: "Backend"
+  - variable: mysql.persistence.enabled
+    label: Persistence enabled (for MySQL)
+    default: true
+    description: Add persistence to the MySQL instance
+    type: boolean
+    required: true
+    group: "Backend"
+    show_if: "mysql.enabled=true"
+  - variable: mysql.mysqlRootPassword
+    label: MySQL root password
+    default: ""
+    description: Add MySQL root password (for MySQL in general)
+    type: password
+    required: true
+    group: "Backend"
+    show_if: "mysql.enabled=true"
+  - variable: mysql.mysqlUser
+    label: MySQL username
+    default: "opal"
+    description: Add MySQL user (for Opal)
+    type: string
+    required: true
+    group: "Backend"
+    show_if: "mysql.enabled=true"
+  - variable: mysql.mysqlPassword
+    label: MySQL user password
+    default: ""
+    description: Add MySQL user password (for Opal)
+    type: password
+    required: true
+    group: "Backend"
+    show_if: "mysql.enabled=true"
+  - variable: mongodb.enabled
+    label: MongoDB is enabled
+    default: true
+    type: boolean
+    required: true
+    group: "Backend"
+  - variable: mongodb.persistence.enabled
+    label: Persistence enabled (for MongoDB)
+    default: true
+    type: boolean
+    required: true
+    group: "Backend"
+    show_if: "mongodb.enabled=true"
+  - variable: mongodb.usePassword
+    label: Use a password with MongoDB
+    default: false
+    type: boolean
+    required: true
+    group: "Backend"
+    show_if: "mongodb.enabled=true"
