@@ -2,3 +2,12 @@ dependencies:
   - name: mysql
     version: ^0.10.2
     repository: https://kubernetes-charts.storage.googleapis.com/
+    condition: mysql.enabled
+  - name: mongodb
+    version: ^5.14.1
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    condition: mongodb.enabled
+  - name: rserver
+    version: ^0.0.2
+    repository: https://registry.molgenis.org/repository/helm
+    condition: rserver.enabled
