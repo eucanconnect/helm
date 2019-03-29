@@ -11,20 +11,16 @@ service:
   type: ClusterIP
   port: 8787
 
-rstudio:
-  name: rstudio
-  strategy:
-    type: Recreate
-  restartPolicy: Always
-  adminPassword: xxxxx
-  persistence:
-    size: 5Gi
-    claim: pvc-rstudio
-  image:
-    repository: registry.hub.docker.com
-    name: molgenis/rstudio
-    tag: beta
-    pullPolicy: Always
+name: rstudio
+strategy:
+  type: Recreate
+restartPolicy: Always
+adminPassword: xxxxx
+image:
+  repository: registry.hub.docker.com
+  name: molgenis/rstudio
+  tag: 3.0.0
+  pullPolicy: Always
 
 ingress:
   enabled: true
@@ -39,8 +35,10 @@ ingress:
 
 persistence:
   enabled: false
-  retain: false
-
+  storageClass: ""
+  accessMode: ReadWriteMany
+  size: 50GB
+  # existingClaim: ""
 
 nodeSelector: {}
 

@@ -1,0 +1,141 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "opal.fullname" . }}-config
+  labels:
+    name: {{ template "opal.fullname" . }}-config
+data:
+  opal-config.properties: |-
+    #
+    # Copyright (c) 2017 OBiBa. All rights reserved.
+    #
+    # This program and the accompanying materials
+    # are made available under the terms of the GNU Public License v3.0.
+    #
+    # You should have received a copy of the GNU General Public License
+    # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    #
+
+    ###############################################################################
+    ##
+    ## Opal Configuration
+    ##
+    ###############################################################################
+
+
+    ##
+    # Identifiers settings
+    ##
+
+    # Fully-qualified name of the identifiers table
+    # Default: opal-keys.keys
+    # Uncomment the following line to set a different value
+    #org.obiba.opal.keys.tableReference=opal-keys.keys
+
+    # Type of entities to store in the identifiers table
+    # Default: Participant
+    # Uncomment the following line to set a different value
+    #org.obiba.opal.keys.entityType=Participant
+
+    # Settings for generating system identifiers
+    # Uncomment the following lines to set a different values
+    # Length of the numerical part of the identifier (i.e. not including the prefix length)
+    #org.obiba.opal.identifiers.length=10
+    # Allow leading zeros in the numerical part of the identifiers
+    #org.obiba.opal.identifiers.zeros=false
+    # Prefix to be applied
+    #org.obiba.opal.identifiers.prefix=
+
+
+    ##
+    # Server settings
+    ##
+
+    # Port number for SSH connections
+    # Default: 8022
+    # Uncomment the following line to set a different value
+    #org.obiba.opal.ssh.port=8022
+
+    # Port number for HTTP(s) connections
+    # Default: 8080 (http), 8443 (https)
+    # Uncomment the following line(s) to set a different value (set to -1 to disable)
+    #org.obiba.opal.http.port=8080
+    #org.obiba.opal.https.port=8443
+
+    # Maximum time a single read/write HTTP operation can take in millis (default is 30000)
+    #org.obiba.opal.maxIdleTime=30000
+
+    ##
+    # General settings
+    ##
+
+    # Opal's public URL (to be used, for example, in Opal emails containing links to Opal resources)
+    # Default: http://localhost:8080
+    #org.obiba.opal.public.url=http://localhost:8080
+
+    # Variable summaries cache
+    #org.obiba.opal.cache.variableSummaries=true
+
+    ##
+    # Security settings
+    ##
+
+    # Number of times the user password is hashed for attack resiliency
+    #org.obiba.opal.security.password.nbHashIterations=10000
+
+    ##
+    # Email settings
+    ##
+
+    # Email (SMTP)
+    # Defaults: localhost:25 from opal@obiba.org
+    # Additional configuration can be specified in the 'smtp.properties' file.
+    # See http://java.sun.com/products/javamail/javadocs/com/sun/mail/smtp/package-summary.html
+    # for a list of properties that can be specified in smtp.properties
+    #org.obiba.opal.smtp.host=localhost
+    #org.obiba.opal.smtp.port=25
+    # "From" address to use when sending emails
+    #org.obiba.opal.smtp.from=opal@obiba.org
+
+    # Whether or not to use SMTP AUTH (default is false).
+    # Use smtp.properties to configure the auth mechanism
+    #org.obiba.opal.smtp.auth=false
+    #org.obiba.opal.smtp.username=
+    #org.obiba.opal.smtp.password=
+
+    ##
+    # R server settings
+    ##
+    # R server administration
+    # Specify the port number of the R server controller.
+    #org.obiba.rserver.port=6312
+
+    # Rserve connection settings
+    # Hostname of the Rserve daemon (default is blank, i.e. the one defined by Rserve (localhost))
+    org.obiba.opal.Rserve.host={{ template "opal.fullname" . }}-rserver
+    # TCP port to connect to  (default is blank, i.e. the one defined by Rserve (6311))
+    #org.obiba.opal.Rserve.port=
+    # Username to use for login-in to Rserve (none by default)
+    #org.obiba.opal.Rserve.username=
+    # Password to use for login-in to Rserve (none by default)
+    #org.obiba.opal.Rserve.password=
+    # Character encoding for strings (default is utf8)
+    #org.obiba.opal.Rserve.encoding=utf8
+
+    ##
+    # Obiba Authentication Realm for single sign-on support
+    ##
+
+    # Agate server URL
+    #org.obiba.realm.url=https://localhost:8444
+
+    # Opal server identification
+    #org.obiba.realm.service.name=opal
+    #org.obiba.realm.service.key=opal
+
+    ##
+    # Atlassian Crowd settings
+    ##
+
+    # Crowd client config
+    crowd.properties.path = file:${OPAL_HOME}/conf/crowd/crowd.properties

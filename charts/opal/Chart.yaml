@@ -1,12 +1,11 @@
 apiVersion: v1
-appVersion: "1.0"
 description: Opal - helm stack (in BETA)
 name: opal
-version: 0.5.0
+version: 1.0.0
+appVersion: 2.13
 sources:
-- https://github.com/lifecycle-project/datashield-infra-docker-helm.git
-icon: https://raw.githubusercontent.com/lifecycle-project/datashield-infra-docker-helm/master/charts/opal/catalogIcon-opal.png
+- https://github.com/lifecycle-project/datashield-helm.git
+icon: https://raw.githubusercontent.com/lifecycle-project/datashield-helm/master/charts/opal/catalogIcon-opal.png
 home: https://obiba.org
 maintainers:
 - name: sidohaakma
-- name: fdlk

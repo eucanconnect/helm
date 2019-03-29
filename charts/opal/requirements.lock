@@ -1,6 +1,12 @@
 dependencies:
 - name: mysql
   repository: https://kubernetes-charts.storage.googleapis.com/
-  version: 0.10.2
-digest: sha256:77710fe100fb005d51e006d2e19643f9af2b1aadd1c2249c67ffc5be6a095f30
-generated: 2018-11-06T15:57:20.530933765Z
+  version: 0.15.0
+- name: mongodb
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 5.14.1
+- name: rserver
+  repository: https://registry.molgenis.org/repository/helm
+  version: 0.0.2
+digest: sha256:ac8b1b2e7d15cce315c80305e030fbfaad3aa1992569a95a8d473f4a81c8071e
+generated: 2019-03-27T21:16:30.154229909+01:00

@@ -1,0 +1,57 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "opal.fullname" . }}-bootstrapper
+spec:
+  template:
+    metadata:
+      name: {{ template "opal.fullname" . }}-bootstrapper
+    spec:
+      initContainers:
+        - name: init-opal
+          image: fabric8/fabric8-dependency-wait-service
+          env:
+            - name: OPAL_HOST
+              value: {{ template "opal.fullname" . }}
+            - name: DEPENDENCY_POLL_INTERVAL
+              value: "11"
+            - name: DEPENDENCY_LOG_VERBOSE
+              value: "true"
+          command: ["/bin/sh"]
+          args: ["-c", "fabric8-dependency-wait-service-linux-amd64 http://$(OPAL_HOST):8080"]
+#        - name: init-rserver
+#          image: fabric8/fabric8-dependency-wait-service
+#          env:
+#            - name: RSERVER_HOST
+#              value: {{ template "opal.fullname" . }}-rserver
+#            - name: DEPENDENCY_POLL_INTERVAL
+#              value: "11"
+#            - name: DEPENDENCY_LOG_VERBOSE
+#              value: "true"
+#          command: ["/bin/sh"]
+#          args: ["-c", "fabric8-dependency-wait-service-linux-amd64 http://$(RSERVER_HOST):6312"]
+#        - name: init-mongodb
+#          image: fabric8/fabric8-dependency-wait-service
+#          env:
+#            - name: MONGODB_HOST
+#              value: {{ template "opal.fullname" . }}-mongodb
+#            - name: DEPENDENCY_POLL_INTERVAL
+#              value: "11"
+#            - name: DEPENDENCY_LOG_VERBOSE
+#              value: "true"
+#          command: ["/bin/sh"]
+#          args: ["-c", "fabric8-dependency-wait-service-linux-amd64 mongodb://$(MONGODB_HOST):27017"]
+      containers:
+        - name: opal-bootstrapper
+          image: {{ .Values.bootstrapper.image.repository }}/{{ .Values.bootstrapper.image.name }}:{{ .Values.bootstrapper.image.tag }}
+          imagePullPolicy: {{ .Values.bootstrapper.image.pullPolicy }}
+          env:
+            - name: OPAL_ADMINISTRATOR_PASSWORD
+              value: "{{ .Values.adminPassword }}"
+            - name: OPAL_HOST
+              value: {{ template "opal.fullname" . }}
+            - name: MONGODB_HOST
+              value: {{ template "opal.fullname" . }}-mongodb
+            - name: RSERVER_HOST
+              value: {{ template "opal.fullname" . }}-rserver
+      restartPolicy: Never
