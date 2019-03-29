@@ -1,0 +1,10 @@
+categories:
+  - Opal
+questions:
+  - variable: image.tag
+    label: RServer version
+    default: "latest"
+    description: "Select a RServer version (check hub.docker.com/obiba for released tags)"
+    type: string
+    required: true
+    group: "Provisioning"
