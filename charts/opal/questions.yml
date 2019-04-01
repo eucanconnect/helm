@@ -45,26 +45,32 @@ questions:
         group: "Services"
   - variable: populator.enabled
     label: Opal populator is enabled
-    default: true
+    default: false
     type: boolean
     required: true
     show_subquestion_if: true
     group: "Services"
     subquestions:
-      - variable: bootstrapper.dataDictionary.cohort
+      - variable: populator.image.tag
+        label: Populator version
+        default: "latest"
+        type: string
+        required: true
+        group: "Services"-
+      - variable: populator.dataDictionary.cohort
         label: Cohort
         default: ""
         type: string
         required: true
         group: "Data"
-      - variable: bootstrapper.dataDictionary.version
+      - variable: populator.dataDictionary.version
         label: Version
         default: "1_0"
         description: "Should be something like this x_x (for example 1_0)"
         type: string
         required: true
         group: "Data"
-      - variable: bootstrapper.dataDictionary.state
+      - variable: populator.dataDictionary.state
         label: state
         default: "beta"
         description: "Can be 'beta' or 'release'"
