@@ -41,8 +41,6 @@ spec:
           env:
             - name: OPAL_ADMINISTRATOR_PASSWORD
               value: "{{ .Values.adminPassword }}"
-            - name: org.obiba.opal.Rserve.host
-              value: {{ template "opal.fullname" . }}-rserver
           ports:
             - containerPort: {{ .Values.service.port }}
           volumeMounts:
