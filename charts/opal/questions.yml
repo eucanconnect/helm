@@ -34,8 +34,8 @@ questions:
     default: true
     type: boolean
     required: true
-    show_subquestion_if: true
     group: "Services"
+    show_subquestion_if: true
     subquestions:
       - variable: bootstrapper.image.tag
         label: Bootstrapper version
@@ -48,8 +48,8 @@ questions:
     default: false
     type: boolean
     required: true
-    show_subquestion_if: true
     group: "Services"
+    show_subquestion_if: true
     subquestions:
       - variable: populator.image.tag
         label: Populator version
@@ -62,21 +62,21 @@ questions:
         default: ""
         type: string
         required: true
-        group: "Data"
+        group: "Services"
       - variable: populator.dataDictionary.version
         label: Version
         default: "1_0"
         description: "Should be something like this x_x (for example 1_0)"
         type: string
         required: true
-        group: "Data"
+        group: "Services"
       - variable: populator.dataDictionary.state
         label: state
         default: "beta"
         description: "Can be 'beta' or 'release'"
         type: string
         required: true
-        group: "Data"
+        group: "Services"
   - variable: persistence.enabled
     label: Persistence enabled (for Opal)
     default: true

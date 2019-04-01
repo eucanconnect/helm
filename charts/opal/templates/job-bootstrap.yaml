@@ -20,7 +20,7 @@ spec:
               value: "true"
           command: ["/bin/sh"]
           args: ["-c", "fabric8-dependency-wait-service-linux-amd64 http://$(OPAL_HOST):8080"]
-          - name: init-opal
+          - name: init-rserver
             image: fabric8/fabric8-dependency-wait-service
             env:
               - name: RSERVER_HOST
@@ -44,11 +44,5 @@ spec:
               value: {{ template "opal.fullname" . }}-mongodb
             - name: RSERVER_HOST
               value: {{ template "opal.fullname" . }}-rserver
-            - name: COHORT
-              value: {{ .Values.bootstrapper.dataDictionary.cohort }}
-            - name: DATA_DICTIONARY_VERSION
-              value: {{ .Values.bootstrapper.dataDictionary.version | quote }}
-            - name: DATA_DICTIONARY_STATE
-              value: {{ .Values.bootstrapper.dataDictionary.state }}
       restartPolicy: Never
-{{- end }}
+{{- end -}}
