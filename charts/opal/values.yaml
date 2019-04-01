@@ -43,11 +43,15 @@ persistence:
     # existingClaim: ""
 
 bootstrapper:
+  enabled: true
   image:
     repository: registry.molgenis.org
     name: datashield/opal-bootstrapper
     tag: 2.0.12
     pullPolicy: Always
+
+populator:
+  enabled: false
 #  dataDictionary:
 #    cohort:
 #    version:
