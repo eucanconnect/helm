@@ -8,6 +8,6 @@ dependencies:
     repository: https://kubernetes-charts.storage.googleapis.com/
     condition: mongodb.enabled
   - name: rserver
-    version: ^0.0.2
+    version: ^1.0.0
     repository: https://registry.molgenis.org/repository/helm
     condition: rserver.enabled
