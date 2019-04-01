@@ -18,11 +18,11 @@ javaOpts:
   maxHeapSpace: "3g"
 resources:
   limits:
-    cpu: 6
-    memory: 6Gi
-  requests:
     cpu: 4
     memory: 4Gi
+  requests:
+    cpu: 2
+    memory: 2Gi
 image:
   repository: registry.hub.docker.com
   name: obiba/opal
