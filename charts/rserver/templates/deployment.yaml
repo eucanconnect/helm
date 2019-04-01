@@ -26,8 +26,8 @@ spec:
         image: {{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
-        - containerPort: {{ .Values.service.port.external }}
-        - containerPort: {{ .Values.service.port.internal }}
+        - containerPort: {{ .Values.service.port.rserver }}
+        - containerPort: {{ .Values.service.port.rserve }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
 

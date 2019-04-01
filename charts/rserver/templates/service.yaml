@@ -11,9 +11,9 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - name: rserve
-      port: {{ .Values.service.port.external }}
+      port: {{ .Values.service.port.rserve }}
     - name: rserver
-      port: {{ .Values.service.port.internal }}
+      port: {{ .Values.service.port.rserver }}
   selector:
     app: {{ template "rserver.name" . }}
     release: {{ .Release.Name }}

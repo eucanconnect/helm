@@ -5,8 +5,8 @@ replicaCount: 1
 service:
   type: ClusterIP
   port:
-    internal: 6312
-    external: 6311
+    rserver: 6312
+    rserve: 6311
 
 image:
   repository: registry.hub.docker.com
@@ -15,7 +15,7 @@ image:
   pullPolicy: IfNotPresent
 resources:
   limits:
-    cpu: 2
+    cpu: 8
     memory: 4Gi
   requests:
     cpu: 200m
