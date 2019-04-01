@@ -1,3 +1,4 @@
+{{- if .Values.bootstrapper.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -19,6 +20,17 @@ spec:
               value: "true"
           command: ["/bin/sh"]
           args: ["-c", "fabric8-dependency-wait-service-linux-amd64 http://$(OPAL_HOST):8080"]
+          - name: init-opal
+            image: fabric8/fabric8-dependency-wait-service
+            env:
+              - name: RSERVER_HOST
+                value: {{ template "opal.fullname" . }}-rserver
+              - name: DEPENDENCY_POLL_INTERVAL
+                value: "11"
+              - name: DEPENDENCY_LOG_VERBOSE
+                value: "true"
+            command: ["/bin/sh"]
+            args: ["-c", "fabric8-dependency-wait-service-linux-amd64 http://$(RSERVER_HOST):6312/rserver"]
       containers:
         - name: opal-bootstrapper
           image: {{ .Values.bootstrapper.image.repository }}/{{ .Values.bootstrapper.image.name }}:{{ .Values.bootstrapper.image.tag }}
@@ -39,3 +51,4 @@ spec:
             - name: DATA_DICTIONARY_STATE
               value: {{ .Values.bootstrapper.dataDictionary.state }}
       restartPolicy: Never
+{{- end }}

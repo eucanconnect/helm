@@ -1,0 +1,39 @@
+{{- if .Values.populator.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "opal.fullname" . }}-bootstrapper
+spec:
+  template:
+    metadata:
+      name: {{ template "opal.fullname" . }}-bootstrapper
+    spec:
+      initContainers:
+        - name: init-populator
+          image: fabric8/fabric8-dependency-wait-service
+          env:
+            - name: OPAL_HOST
+              value: {{ template "opal.fullname" . }}
+            - name: DEPENDENCY_POLL_INTERVAL
+              value: "11"
+            - name: DEPENDENCY_LOG_VERBOSE
+              value: "true"
+          command: ["/bin/sh"]
+          args: ["-c", "fabric8-dependency-wait-service-linux-amd64 http://$(OPAL_HOST):8080"]
+      containers:
+        - name: opal-populator
+          image: {{ .Values.populator.image.repository }}/{{ .Values.populator.image.name }}:{{ .Values.populator.image.tag }}
+          imagePullPolicy: {{ .Values.populator.image.pullPolicy }}
+          env:
+            - name: OPAL_ADMINISTRATOR_PASSWORD
+              value: "{{ .Values.adminPassword }}"
+            - name: OPAL_HOST
+              value: {{ template "opal.fullname" . }}
+            - name: COHORT
+              value: {{ .Values.populator.dataDictionary.cohort }}
+            - name: DATA_DICTIONARY_VERSION
+              value: {{ .Values.populator.dataDictionary.version | quote }}
+            - name: DATA_DICTIONARY_STATE
+              value: {{ .Values.populator.dataDictionary.state }}
+      restartPolicy: Never
+{{- end }}
