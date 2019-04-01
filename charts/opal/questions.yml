@@ -56,7 +56,7 @@ questions:
         default: "latest"
         type: string
         required: true
-        group: "Services"-
+        group: "Services"
       - variable: populator.dataDictionary.cohort
         label: Cohort
         default: ""
