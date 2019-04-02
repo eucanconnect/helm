@@ -64,7 +64,7 @@ populator:
 
 rserver:
   enabled: true
-  embedded: true
+  embedded: false
 
 mongodb:
   enabled: false
