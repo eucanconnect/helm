@@ -34,10 +34,12 @@ spec:
       {{- end }}
       containers:
         - name: opal
+      {{- if and .Values.rserver.enabled (not .Values.rserver.embedded ) }}
           lifecycle:
             postStart:
               exec:
                 command: ['sh', '-c', 'yes | cp /data/*.properties /srv/conf/. && yes | cp /data/*.properties /usr/share/opal/conf/.;']
+      {{- end }}
           image: {{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
