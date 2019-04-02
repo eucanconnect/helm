@@ -43,13 +43,6 @@ questions:
         required: true
         show_if: "rserver.embedded=false"
         group: "Services"
-  - variable: rserver.image.tag
-    label: RServer version
-    default: "latest"
-    description: "Select a RServer version (check hub.docker.com/obiba for released tags)"
-    type: string
-    required: true
-    group: "Services"
   - variable: bootstrapper.enabled
     label: Opal boostrapper is enabled
     default: true
