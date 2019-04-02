@@ -22,6 +22,27 @@ questions:
     type: password
     required: true
     group: "Provisioning"
+  - variable: rserver.enabled
+    label: RServer enabled
+    default: true
+    type: boolean
+    required: true
+    group: "Services"
+    show_subquestion_if: true
+    subquestions:
+      - variable: rserver.embedded
+        label: RServer embedded
+        default: false
+        type: boolean
+        required: true
+        group: "Services"
+      - variable: rserver.image.tag
+        label: RServer version
+        default: "latest"
+        type: string
+        required: true
+        show_if: "rserver.embedded=false"
+        group: "Services"
   - variable: rserver.image.tag
     label: RServer version
     default: "latest"

@@ -1,3 +1,4 @@
+{{- if and .Values.rserver.enabled (not .Values.rserver.embedded ) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -139,3 +140,4 @@ data:
 
     # Crowd client config
     crowd.properties.path = file:${OPAL_HOME}/conf/crowd/crowd.properties
+  {{- end }}
