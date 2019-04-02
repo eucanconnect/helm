@@ -22,7 +22,7 @@ spec:
         release: {{ .Release.Name }}
     spec:
       initContainers:
-        {{- if and .Values.rserver.enabled (not .Values.rserver.embedded ) }}
+      {{- if and .Values.rserver.enabled (not .Values.rserver.embedded ) }}
         - name: copy-config
           image: busybox
           command: ['sh', '-c', 'yes | cp /root/*.properties /data/.']
@@ -31,7 +31,7 @@ spec:
               mountPath: /root/
             - name: opal-configdir
               mountPath: /data/
-        {{- end }}
+      {{- end }}
       containers:
         - name: opal
           lifecycle:
@@ -96,7 +96,7 @@ spec:
           configMap:
             name: {{ template "opal.fullname" . }}-config
             key: opal-config.properties
-      {{- if and .Values.rserver.enabled (not .Values.rserver.embedded ) }}
+      {{- end }}
         - name: pv-user
       {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
