@@ -22,6 +22,7 @@ spec:
         release: {{ .Release.Name }}
     spec:
       initContainers:
+      {{- if and .Values.rserver.enabled (not .Values.rserver.embedded ) }}
         - name: copy-config
           image: busybox
           command: ['sh', '-c', 'yes | cp /root/*.properties /data/.']
@@ -30,12 +31,15 @@ spec:
               mountPath: /root/
             - name: opal-configdir
               mountPath: /data/
+      {{- end }}
       containers:
         - name: opal
+      {{- if and .Values.rserver.enabled (not .Values.rserver.embedded ) }}
           lifecycle:
             postStart:
               exec:
                 command: ['sh', '-c', 'yes | cp /data/*.properties /srv/conf/. && yes | cp /data/*.properties /usr/share/opal/conf/.;']
+      {{- end }}
           image: {{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
@@ -48,8 +52,10 @@ spec:
               mountPath: /home
             - name: pv-app
               mountPath: /var/lib/opal
+            {{- if and .Values.rserver.enabled (not .Values.rserver.embedded ) }}
             - name: opal-configdir
               mountPath: /data
+            {{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           livenessProbe:
@@ -68,14 +74,31 @@ spec:
             periodSeconds: 30
             failureThreshold: 3
             successThreshold: 1
+        {{- if and .Values.rserver.enabled ( .Values.rserver.embedded ) }}
+        - name: rserver
+          image: registry.hub.docker.com/obiba/opal-rserver:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 6312
+            - containerPort: 6311
+          resources:
+            limits:
+              cpu: 2
+              memory: 4Gi
+            requests:
+              cpu: 1
+              memory: 2Gi
+        {{- end }}
 
       volumes:
+      {{- if and .Values.rserver.enabled (not .Values.rserver.embedded ) }}
         - name: opal-configdir
           emptyDir: {}
         - name: opal-configmap
           configMap:
             name: {{ template "opal.fullname" . }}-config
             key: opal-config.properties
+      {{- end }}
         - name: pv-user
       {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:

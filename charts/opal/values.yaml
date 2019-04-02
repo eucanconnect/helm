@@ -21,8 +21,8 @@ resources:
     cpu: 4
     memory: 4Gi
   requests:
-    cpu: 200m
-    memory: 4Gi
+    cpu: 2
+    memory: 2Gi
 image:
   repository: registry.hub.docker.com
   name: obiba/opal
@@ -43,19 +43,28 @@ persistence:
     # existingClaim: ""
 
 bootstrapper:
+  enabled: true
   image:
     repository: registry.molgenis.org
     name: datashield/opal-bootstrapper
-    tag: 2.0.12
+    tag: 3.0.2
+    pullPolicy: Always
+
+populator:
+  enabled: false
+  image:
+    repository: registry.molgenis.org
+    name: datashield/opal-populator
+    tag: 1.0.0
     pullPolicy: Always
 #  dataDictionary:
 #    cohort:
 #    version:
 #    state:
 
-
 rserver:
   enabled: true
+  embedded: false
 
 mongodb:
   enabled: false

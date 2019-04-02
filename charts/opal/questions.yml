@@ -22,39 +22,75 @@ questions:
     type: password
     required: true
     group: "Provisioning"
-  - variable: bootstrapper.dataDictionary.cohort
-    label: Cohort
-    default: ""
-    type: string
-    required: true
-    group: "Data"
-  - variable: bootstrapper.dataDictionary.version
-    label: Version
-    default: "1_0"
-    description: "Should be something like this x_x (for example 1_0)"
-    type: string
-    required: true
-    group: "Data"
-  - variable: bootstrapper.dataDictionary.state
-    label: state
-    default: "beta"
-    description: "Can be 'beta' or 'release'"
-    type: string
-    required: true
-    group: "Data"
-  - variable: rserver.image.tag
-    label: RServer version
-    default: "latest"
-    description: "Select a RServer version (check hub.docker.com/obiba for released tags)"
-    type: string
+  - variable: rserver.enabled
+    label: RServer enabled
+    default: true
+    type: boolean
     required: true
     group: "Services"
-  - variable: bootstrapper.image.tag
-    label: Bootstrapper version
-    default: "latest"
-    type: string
+    show_subquestion_if: true
+    subquestions:
+      - variable: rserver.embedded
+        label: RServer embedded
+        default: false
+        type: boolean
+        required: true
+        group: "Services"
+      - variable: rserver.image.tag
+        label: RServer version
+        default: "latest"
+        type: string
+        required: true
+        show_if: "rserver.embedded=false"
+        group: "Services"
+  - variable: bootstrapper.enabled
+    label: Opal boostrapper is enabled
+    default: true
+    type: boolean
     required: true
     group: "Services"
+    show_subquestion_if: true
+    subquestions:
+      - variable: bootstrapper.image.tag
+        label: Bootstrapper version
+        default: "latest"
+        type: string
+        required: true
+        group: "Services"
+  - variable: populator.enabled
+    label: Opal populator is enabled
+    default: false
+    type: boolean
+    required: true
+    group: "Services"
+    show_subquestion_if: true
+    subquestions:
+      - variable: populator.image.tag
+        label: Populator version
+        default: "latest"
+        type: string
+        required: true
+        group: "Services"
+      - variable: populator.dataDictionary.cohort
+        label: Cohort
+        default: ""
+        type: string
+        required: true
+        group: "Services"
+      - variable: populator.dataDictionary.version
+        label: Version
+        default: "1_0"
+        description: "Should be something like this x_x (for example 1_0)"
+        type: string
+        required: true
+        group: "Services"
+      - variable: populator.dataDictionary.state
+        label: state
+        default: "beta"
+        description: "Can be 'beta' or 'release'"
+        type: string
+        required: true
+        group: "Services"
   - variable: persistence.enabled
     label: Persistence enabled (for Opal)
     default: true
