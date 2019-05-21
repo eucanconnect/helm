@@ -45,6 +45,8 @@ spec:
           env:
             - name: OPAL_ADMINISTRATOR_PASSWORD
               value: "{{ .Values.adminPassword }}"
+            - name: JAVA_OPTS
+              value: JAVA_OPTS=-Xms{{ .Values.javaOpts }} -Xmx{{ .Values.javaOpts }} -XX:MaxPermSize=256M -XX:+UseG1GC
           ports:
             - containerPort: {{ .Values.service.port }}
           volumeMounts:
