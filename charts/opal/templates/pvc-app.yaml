@@ -8,17 +8,17 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     helm.sh/chart: {{ include "opal.chart" . }}
-  spec:
-    accessModes:
-      - {{ .Values.persistence.app.accessMode | quote }}
-    resources:
-      requests:
-        storage: {{ .Values.persistence.app.size | quote }}
-    {{- if .Values.persistence.app.storageClass }}
-    {{- if (eq "-" .Values.persistence.app.storageClass) }}
-    storageClassName: ""
-    {{- else }}
-    storageClassName: "{{ .Values.persistence.app.storageClass }}"
-    {{- end }}
-    {{- end }}
-    {{- end }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.app.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.app.size | quote }}
+  {{- if .Values.persistence.app.storageClass }}
+  {{- if (eq "-" .Values.persistence.app.storageClass) }}
+  storageClassName: ""
+  {{- else }}
+  storageClassName: "{{ .Values.persistence.app.storageClass }}"
+  {{- end }}
+  {{- end }}
+  {{- end }}

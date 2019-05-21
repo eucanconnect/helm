@@ -30,7 +30,7 @@ image:
   pullPolicy: Always
 adminPassword: xxxxx
 persistence:
-  enabled: false
+  enabled: true
   user:
     storageClass: ""
     accessMode: ReadWriteMany
