@@ -20,6 +20,7 @@ spec:
               value: "true"
           command: ["/bin/sh"]
           args: ["-c", "fabric8-dependency-wait-service-linux-amd64 http://$(OPAL_HOST):8080"]
+        {{ if .Values.rserver.standalone }}
         - name: init-rserver
           image: fabric8/fabric8-dependency-wait-service
           env:
@@ -31,6 +32,7 @@ spec:
             value: "true"
           command: ["/bin/sh"]
           args: ["-c", "fabric8-dependency-wait-service-linux-amd64 http://$(RSERVER_HOST):6312/rserver"]
+        {{- end }}
       containers:
         - name: opal-bootstrapper
           image: {{ .Values.bootstrapper.image.repository }}/{{ .Values.bootstrapper.image.name }}:{{ .Values.bootstrapper.image.tag }}
