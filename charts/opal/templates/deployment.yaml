@@ -78,18 +78,14 @@ spec:
             successThreshold: 1
         {{- if and .Values.rserver.enabled ( .Values.rserver.embedded ) }}
         - name: rserver
-          image: registry.hub.docker.com/obiba/opal-rserver:latest
+          image: registry.hub.docker.com/obiba/opal-rserver:{{ .Values.rserver.image.tag }}
+          tag: 
           imagePullPolicy: Always
           ports:
             - containerPort: 6312
             - containerPort: 6311
           resources:
-            limits:
-              cpu: 2
-              memory: 4Gi
-            requests:
-              cpu: 1
-              memory: 2Gi
+{{ toYaml .Values.rserver.resources | indent 12 }}
         {{- end }}
 
       volumes:

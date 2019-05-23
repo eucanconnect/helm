@@ -67,6 +67,15 @@ populator:
 rserver:
   enabled: true
   embedded: false
+  image:
+    tag: 1.5
+  resources:
+    limits:
+      cpu: 2
+      memory: 6Gi
+  requests:
+    cpu: 1
+    memory: 4Gi
 
 mongodb:
   enabled: false
