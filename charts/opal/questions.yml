@@ -41,7 +41,7 @@ questions:
         default: "latest"
         type: string
         required: true
-        show_if: "rserver.embedded=false"
+        show_if: "rserver.standalone=true"
         group: "Services"
   - variable: bootstrapper.enabled
     label: Opal boostrapper is enabled
