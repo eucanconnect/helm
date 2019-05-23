@@ -72,10 +72,10 @@ rserver:
   resources:
     limits:
       cpu: 2
-      memory: 6Gi
+      memory: 2Gi
     requests:
       cpu: 1
-      memory: 4Gi
+      memory: 1Gi
 
 mongodb:
   enabled: false
