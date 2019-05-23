@@ -15,14 +15,16 @@ ingress:
   tls: []
 
 javaOpts:
-  maxHeapSpace: "3g"
+  initHeapSpace: "3g"
+  maxHeapSpace: "4g"
+  maxPermSize: "1g"
 resources:
   limits:
     cpu: 4
-    memory: 4Gi
+    memory: 6Gi
   requests:
     cpu: 2
-    memory: 2Gi
+    memory: 4Gi
 image:
   repository: registry.hub.docker.com
   name: obiba/opal
@@ -30,16 +32,16 @@ image:
   pullPolicy: Always
 adminPassword: xxxxx
 persistence:
-  enabled: false
+  enabled: true
   user:
     storageClass: ""
     accessMode: ReadWriteMany
-    size: 50Gi
+    size: 15Gi
     # existingClaim: ""
   app:
     storageClass: ""
     accessMode: ReadWriteMany
-    size: 50Gi
+    size: 15Gi
     # existingClaim: ""
 
 bootstrapper:

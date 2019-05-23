@@ -45,6 +45,8 @@ spec:
           env:
             - name: OPAL_ADMINISTRATOR_PASSWORD
               value: "{{ .Values.adminPassword }}"
+            - name: JAVA_OPTS
+              value: -Xms{{ .Values.javaOpts.initHeapSpace }} -Xmx{{ .Values.javaOpts.maxHeapSpace }} -XX:MaxPermSize={{ .Values.javaOpts.maxPermSize }} -XX:+UseG1GC
           ports:
             - containerPort: {{ .Values.service.port }}
           volumeMounts:
