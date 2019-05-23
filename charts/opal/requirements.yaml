@@ -10,4 +10,4 @@ dependencies:
   - name: rserver
     version: ^1.2.5
     repository: https://registry.molgenis.org/repository/helm
-    condition: rserver.enabled,rserver.standalone
+    condition: rserver.standalone
