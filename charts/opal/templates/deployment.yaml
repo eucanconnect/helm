@@ -22,7 +22,7 @@ spec:
         release: {{ .Release.Name }}
     spec:
       initContainers:
-      {{- if and .Values.rserver.enabled (not .Values.rserver.embedded ) }}
+      {{- if and .Values.rserver.enabled ( .Values.rserver.standalone ) }}
         - name: copy-config
           image: busybox
           command: ['sh', '-c', 'yes | cp /root/*.properties /data/.']
@@ -34,7 +34,7 @@ spec:
       {{- end }}
       containers:
         - name: opal
-      {{- if and .Values.rserver.enabled (not .Values.rserver.embedded ) }}
+      {{- if and .Values.rserver.enabled ( .Values.rserver.standalone ) }}
           lifecycle:
             postStart:
               exec:
@@ -54,7 +54,7 @@ spec:
               mountPath: /home
             - name: pv-app
               mountPath: /var/lib/opal
-            {{- if and .Values.rserver.enabled (not .Values.rserver.embedded ) }}
+            {{- if and .Values.rserver.enabled ( .Values.rserver.standalone ) }}
             - name: opal-configdir
               mountPath: /data
             {{- end }}
@@ -76,7 +76,7 @@ spec:
             periodSeconds: 30
             failureThreshold: 3
             successThreshold: 1
-        {{- if and .Values.rserver.enabled ( .Values.rserver.embedded ) }}
+        {{- if and .Values.rserver.enabled ( not .Values.rserver.standalone ) }}
         - name: rserver
           image: registry.hub.docker.com/obiba/opal-rserver:{{ .Values.rserver.image.tag }}
           tag: 
@@ -89,7 +89,7 @@ spec:
         {{- end }}
 
       volumes:
-      {{- if and .Values.rserver.enabled (not .Values.rserver.embedded ) }}
+      {{- if and .Values.rserver.enabled ( .Values.rserver.standalone ) }}
         - name: opal-configdir
           emptyDir: {}
         - name: opal-configmap

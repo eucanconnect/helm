@@ -30,9 +30,9 @@ questions:
     group: "Services"
     show_subquestion_if: true
     subquestions:
-      - variable: rserver.embedded
-        label: RServer embedded
-        default: false
+      - variable: rserver.standalone
+        label: RServer standalone
+        default: true
         type: boolean
         required: true
         group: "Services"
