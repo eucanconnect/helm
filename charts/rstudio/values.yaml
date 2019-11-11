@@ -37,7 +37,7 @@ persistence:
   enabled: false
   storageClass: ""
   accessMode: ReadWriteMany
-  size: 50GB
+  size: 50Gi
   # existingClaim: ""
 
 nodeSelector: {}
