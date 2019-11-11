@@ -2,7 +2,7 @@ apiVersion: v1
 description: RStudio stack
 name: rstudio
 appVersion: 3.6.1
-version: 0.3.0
+version: 0.3.1
 sources:
 - https://github.com/lifecycle-project/datashield-helm.git
 icon: https://raw.githubusercontent.com/lifecycle-project/datashield-helm/master/charts/rstudio/catalogIcon-rstudio.png
