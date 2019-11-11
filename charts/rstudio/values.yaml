@@ -19,7 +19,7 @@ adminPassword: xxxxx
 image:
   repository: registry.hub.docker.com
   name: molgenis/rstudio
-  tag: 3.0.0
+  tag: 3.1.0
   pullPolicy: Always
 
 ingress:

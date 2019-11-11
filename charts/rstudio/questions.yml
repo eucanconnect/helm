@@ -32,7 +32,7 @@ questions:
   group: "Provisioning"
 - variable: rstudio.image.tag
   label: Version
-  default: "latest"
+  default: "3.1.0"
   description: "Select a RStudio version (check the registry.molgenis.org or hub.docker.com for released tags)"
   type: string
   required: true
@@ -50,13 +50,4 @@ questions:
   description: Add persistence to the RStudio instance
   type: boolean
   required: true
-  show_subquestion_if: true
   group: "Persistence"
-  subquestions:
-  - variable: persistence.retain
-    label: Persistence retain
-    default: true
-    description: Should the volume be retained after POD-deletion
-    type: boolean
-    required: true
-    group: "Persistence"
