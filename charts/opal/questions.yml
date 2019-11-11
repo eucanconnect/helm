@@ -10,7 +10,7 @@ questions:
     group: Loadbalancing
   - variable: image.tag
     label: Opal version
-    default: "latest"
+    default: "2.15"
     description: "Select a Opal version (check hub.docker.com/obiba for released tags)"
     type: string
     required: true
@@ -38,7 +38,7 @@ questions:
         group: "Services"
       - variable: rserver.image.tag
         label: RServer version
-        default: "latest"
+        default: "1.5-3.5"
         type: string
         required: true
         show_if: "rserver.standalone=true"
