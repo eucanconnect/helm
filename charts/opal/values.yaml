@@ -68,7 +68,7 @@ rserver:
   enabled: true
   standalone: false
   image:
-    tag: 1.6-3.6
+    tag: 1.5-3.5
   resources:
     limits:
       cpu: 2
