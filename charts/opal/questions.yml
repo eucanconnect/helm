@@ -38,10 +38,9 @@ questions:
         group: "Services"
       - variable: rserver.image.tag
         label: RServer version
-        default: "1.5-3.5"
+        default: "1.6-3.6"
         type: string
         required: true
-        show_if: "rserver.standalone=true"
         group: "Services"
   - variable: bootstrapper.enabled
     label: Opal boostrapper is enabled
