@@ -28,7 +28,7 @@ resources:
 image:
   repository: registry.hub.docker.com
   name: obiba/opal
-  tag: 3.0
+  tag: 3.0.2
   pullPolicy: Always
 adminPassword: xxxxx
 persistence:
