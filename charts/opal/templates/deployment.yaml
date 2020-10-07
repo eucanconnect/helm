@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "opal.fullname" . }}
@@ -44,7 +44,10 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: OPAL_ADMINISTRATOR_PASSWORD
-              value: "{{ .Values.adminPassword }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "opal.fullname" $ }}
+                  key: adminpassword
             - name: JAVA_OPTS
               value: -Xms{{ .Values.javaOpts.initHeapSpace }} -Xmx{{ .Values.javaOpts.maxHeapSpace }} -XX:MaxPermSize={{ .Values.javaOpts.maxPermSize }} -XX:+UseG1GC
           ports:
@@ -66,7 +69,7 @@ spec:
               port: {{ .Values.service.port }}
             initialDelaySeconds: 80
             periodSeconds: 5
-            failureThreshold: 25
+            failureThreshold: 30
             successThreshold: 1
           readinessProbe:
             httpGet:
@@ -74,7 +77,7 @@ spec:
               port: 8080
             initialDelaySeconds: 120
             periodSeconds: 30
-            failureThreshold: 3
+            failureThreshold: 15
             successThreshold: 1
         {{- if and .Values.rserver.enabled ( not .Values.rserver.standalone ) }}
         - name: rserver

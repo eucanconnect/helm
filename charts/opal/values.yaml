@@ -15,7 +15,7 @@ ingress:
   tls: []
 
 javaOpts:
-  initHeapSpace: "3g"
+  initHeapSpace: "2g"
   maxHeapSpace: "4g"
   maxPermSize: "1g"
 resources:
@@ -28,7 +28,7 @@ resources:
 image:
   repository: registry.hub.docker.com
   name: obiba/opal
-  tag: 2.16
+  tag: 3.0
   pullPolicy: Always
 adminPassword: xxxxx
 persistence:
@@ -47,16 +47,16 @@ persistence:
 bootstrapper:
   enabled: true
   image:
-    repository: registry.molgenis.org
-    name: datashield/opal-bootstrapper
-    tag: 3.0.2
+    repository: registry.hub.docker.com
+    name: eucanconnect/opal-bootstrapper
+    tag: 1.0.0
     pullPolicy: Always
 
 populator:
   enabled: false
   image:
-    repository: registry.molgenis.org
-    name: datashield/opal-populator
+    repository: registry.hub.docker.com
+    name: eucanconnect/opal-populator
     tag: 1.0.0
     pullPolicy: Always
 #  dataDictionary:
