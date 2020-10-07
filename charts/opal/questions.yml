@@ -10,7 +10,7 @@ questions:
     group: Loadbalancing
   - variable: image.tag
     label: Opal version
-    default: "3.0.2"
+    default: "3.0"
     description: "Select a Opal version (check hub.docker.com/obiba for released tags)"
     type: string
     required: true
