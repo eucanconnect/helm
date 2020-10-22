@@ -49,7 +49,7 @@ bootstrapper:
   image:
     repository: registry.hub.docker.com
     name: eucanconnect/opal-bootstrapper
-    tag: 1.0.0
+    tag: latest
     pullPolicy: Always
 
 populator:
@@ -57,7 +57,7 @@ populator:
   image:
     repository: registry.hub.docker.com
     name: eucanconnect/opal-populator
-    tag: 1.0.0
+    tag: latest
     pullPolicy: Always
 #  dataDictionary:
 #    cohort:

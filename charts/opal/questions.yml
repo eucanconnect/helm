@@ -34,7 +34,7 @@ questions:
         label: RServer standalone
         default: false
         type: boolean
-        required: true
+        required: false
         group: "Services"
       - variable: rserver.image.tag
         label: RServer version
