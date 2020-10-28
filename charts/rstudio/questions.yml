@@ -9,7 +9,7 @@ questions:
   required: true
   label: Hostname
   group: Loadbalancing
-- variable: rstudio.environment
+- variable: environment
   label: Environment
   default: development
   type: enum
@@ -20,7 +20,7 @@ questions:
   - acceptance
   - production
   group: "Provisioning"
-- variable: rstudio.image.repository
+- variable: image.repository
   label: Registry
   default: "registry.hub.docker.com"
   description: "Select a registry to pull from"
@@ -30,19 +30,26 @@ questions:
   - "registry.molgenis.org"
   required: true
   group: "Provisioning"
-- variable: rstudio.image.tag
+- variable: image.tag
   label: Version
-  default: "3.1.0"
+  default: "4.0.0"
   description: "Select a RStudio version (check the registry.molgenis.org or hub.docker.com for released tags)"
   type: string
   required: true
   group: "Provisioning"
-- variable: rstudio.adminPassword
+- variable: adminPassword
   label: Password
   default: ""
   description: "Administrator password for RStudio"
   type: password
   required: true
+  group: "Provisioning"
+- variable: users
+  label: Users
+  default: ""
+  description: "A space seperated list of users which you can supply for demo purposes"
+  type: string
+  required: false
   group: "Provisioning"
 - variable: persistence.enabled
   label: Persistence enabled
@@ -51,3 +58,27 @@ questions:
   type: boolean
   required: true
   group: "Persistence"
+- variable: resources.requests.cpu
+  default: 4
+  description: CPU's claim
+  type: integer
+  required: true
+  group: "Resources"
+- variable: resources.limits.cpu
+  default: 4
+  description: CPU's limit
+  type: integer
+  required: true
+  group: "Resources"
+- variable: resources.requests.memory
+  default: 6Gi
+  description: Memory claim (in GB)
+  type: string
+  required: true
+  group: "Resources"
+- variable: resources.limit.memory
+  default: 6Gi
+  description: Memory limit (in GB)
+  type: string
+  required: true
+  group: "Resources"

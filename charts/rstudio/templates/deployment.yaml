@@ -37,6 +37,8 @@ spec:
         env:
         - name: PASSWORD
           value: "{{ .Values.adminPassword }}"
+        - name: USERS
+          value: "{{ .Values.users }}"
         ports:
         - containerPort: {{ .Values.service.port }}
         {{ if .Values.persistence.enabled }}
