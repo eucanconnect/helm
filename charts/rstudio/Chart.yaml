@@ -2,10 +2,10 @@ apiVersion: v1
 description: RStudio stack
 name: rstudio
 appVersion: 3.6.1
-version: 0.3.2
+version: 0.4.1
 sources:
-- https://github.com/lifecycle-project/datashield-helm.git
-icon: https://raw.githubusercontent.com/lifecycle-project/datashield-helm/master/charts/rstudio/catalogIcon-rstudio.png
+- https://github.com/eucanconnect/coral-helm
+icon: https://github.com/eucanconnect/coral-helm/blob/master/charts/rstudio/catalogIcon-rstudio.png?raw=true
 home: https://www.rocker.org
 maintainers:
 - name: sidohaakma

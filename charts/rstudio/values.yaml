@@ -40,6 +40,14 @@ persistence:
   size: 50Gi
   # existingClaim: ""
 
+resources:
+  requests:
+    cpu: 4
+    memory: 6Gi
+  limits:
+    cpu: 4
+    memory: 6Gi
+
 nodeSelector: {}
 
 tolerations: []

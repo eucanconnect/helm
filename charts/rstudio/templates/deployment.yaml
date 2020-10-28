@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "rstudio.fullname" . }}
@@ -52,6 +52,8 @@ spec:
           periodSeconds: 5
           failureThreshold: 25
           successThreshold: 1
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
 
 {{- if .Values.persistence.enabled }}
       volumes:
