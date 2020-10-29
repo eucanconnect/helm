@@ -16,7 +16,6 @@ strategy:
   type: Recreate
 restartPolicy: Always
 adminPassword: xxxxx
-users: 
 image:
   repository: registry.hub.docker.com
   name: molgenis/rstudio

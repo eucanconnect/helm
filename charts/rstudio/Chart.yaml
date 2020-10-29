@@ -2,7 +2,7 @@ apiVersion: v1
 description: RStudio stack
 name: rstudio
 appVersion: 3.6.1
-version: 0.5.0
+version: 0.5.1
 sources:
 - https://github.com/eucanconnect/coral-helm
 icon: https://github.com/eucanconnect/coral-helm/blob/master/charts/rstudio/catalogIcon-rstudio.png?raw=true

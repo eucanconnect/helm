@@ -76,7 +76,7 @@ questions:
   type: string
   required: true
   group: "Resources"
-- variable: resources.limit.memory
+- variable: resources.limits.memory
   default: 6Gi
   description: Memory limit (in GB)
   type: string
