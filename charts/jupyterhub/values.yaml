@@ -1,4 +1,9 @@
 jupyterhub:
+  ingress:
+    enabled: true
+    hosts:
+    - jupyter.edge.molgenis.org
+  
   hub:
     extraConfig: 
         customPodHook: |
