@@ -9,12 +9,9 @@ minikube delete && minikube start --cpus 4 --memory 8192
 minikube tunnel 
 
 # Install a new release of jupiter
-helm upgrade --cleanup-on-fail \                         
-  --install jupiter jupiter/jupyterhub \
-  --namespace jupiter \
-  --version=0.10.2 \
-  --values config.yaml
-
-
+helm upgrade --cleanup-on-fail \
+  --install solid-peahen . \
+  --namespace jupyter \
+  --version=1.0.0
 
 
