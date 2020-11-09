@@ -11,7 +11,7 @@ jupyterhub:
     extraEnv:
       OAUTH2_AUTHORIZE_URL: https://auth.molgenis.org/oauth2/authorize
       OAUTH2_TOKEN_URL: https://auth.molgenis.org/oauth2/token
-      OAUTH_CALLBACK_URL: http://10.96.12.87/hub/oauth_callback
+      OAUTH_CALLBACK_URL: http://10.96.148.15/hub/oauth_callback
 
   singleuser:
     image:
