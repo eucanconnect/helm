@@ -1,0 +1,57 @@
+jupyterhub:
+  ingress:
+    enabled: true
+    hosts:
+    - jupyter.edge.molgenis.org
+  
+  hub:
+    extraConfig: 
+        customPodHook: |
+          c.DockerSpawner.extra_create_kwargs = {"command": 'env PATH="/opt/conda/bin:$PATH" /usr/local/bin/start-singleuser.sh'}
+    extraEnv:
+      OAUTH2_AUTHORIZE_URL: https://auth.molgenis.org/oauth2/authorize
+      OAUTH2_TOKEN_URL: https://auth.molgenis.org/oauth2/token
+      OAUTH_CALLBACK_URL: http://10.96.148.15/hub/oauth_callback
+
+  singleuser:
+    image:
+      name: molgenis/rstudio-jupyter
+      tag: '1.1.0'  
+    cpu:
+      limit: 2
+      guarantee: 1
+    memory:
+      limit: 1G
+      guarantee: 1G
+    extraEnv:
+      PASSWORD: "admin"
+      USER: "rstudio"
+    profileList:
+    - display_name: "DataSHIELD - default"
+      description: "RStudio analysis environment with DataSHIELD (v6.1.0)"
+      default: true
+  # - display_name: "DataSHIELD - v6.1"
+  #   description: "RStudio analysis environment with DataSHIELD (v6.2.0?)"
+  #   kubespawner_override:
+  #     image: molgenis/rstudio:4.1.0
+
+  auth:
+    type: custom
+    scopes: # that is essential to request certain scope, otherwise user profile call won't return anything
+    - "openid"
+    - "name"
+    - "profile"
+    - "email"
+    custom:
+      className: oauthenticator.generic.GenericOAuthenticator
+      config:
+        login_service: "MOLGENIS"
+        client_id: "fe06abd9-4b1e-4d0f-8f17-cd84c4207cc8"
+        client_secret: "AYUCDM3Go8CYYXqBu-npw5jxtgnp8Mzyyf-Rr0iG8X8"
+        token_url: https://auth.molgenis.org/oauth2/token
+        userdata_url: https://auth.molgenis.org/oauth2/userinfo
+        userdata_method: GET
+        username_key: email
+
+  proxy:
+    secretToken: "10b531172444a83276725665f401dc98b4630b7e5b3fdd150873cea8eea6ab7c"
