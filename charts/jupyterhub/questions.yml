@@ -37,14 +37,14 @@ questions:
     label: Service name
     group: Authentication
   - variable: jupyterhub.auth.custom.config.client_id
-    default: "fe06abd9-4b1e-4d0f-8f17-cd84c4207cc8"
+    default: "xxxxx-xxxx-xxxxx-xxxxxx"
     description: "Client ID of the authentication service"
     type: string
     required: true
     label: Client ID
     group: Authentication
   - variable: jupyterhub.auth.custom.config.cient_secret
-    default: "AYUCDM3Go8CYYXqBu-npw5jxtgnp8Mzyyf-Rr0iG8X8"
+    default: "xxxxx-xxxx-xxxxx-xxxxxxxxx-xxxxxxx"
     description: "Client secret of the authentication service"
     type: string
     required: true
