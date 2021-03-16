@@ -50,7 +50,7 @@ jupyterhub:
     extraEnv:
       PASSWORD: "admin"
       USER: "rstudio"
-    start_timeout: 120
+    startTimeout: 300
     profileList:
     - display_name: "DataSHIELD - dsBase v6.0 - default"
       description: "RStudio analysis environment with DataSHIELD | dsBase (v6.0.1)"
