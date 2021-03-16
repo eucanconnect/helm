@@ -2,66 +2,65 @@ categories:
   - JupytorHub
 questions:
   - variable: jupyterhub.ingress.host
-    default: "xip.io"
+    default: "analysis.molgenis.org"
     description: "JupyterHub hostname"
     type: hostname
     required: true
     label: Hostname
-    group: Loadbalancing
-  - variable: jupyterhub.hub.extraEnv.OAUTH2_AUTHORIZE_URL
+    group: General
+  - variable: jupyterhub.proxy.secretToken
+    default: "xxxxx-xxxx-xxxxx-xxxxxxxxx-xxxxxxx"
+    description: "Security token (use 'openssl rand -hex 32' to generate one)"
+    type: string
+    required: true
+    label: Security token
+    group: General
+  - variable: jupyterhub.config.GenericOAuthenticator.authorize_url
     default: "https://auth.molgenis.org/oauth2/authorize"
     description: "Authentication server authorize endpoint"
     type: string
     required: true
     label: Authorization endpoint
-    group: Environment
-  - variable: jupyterhub.hub.extraEnv.OAUTH2_TOKEN_URL
+    group: Authentication
+  - variable: jupyterhub.config.GenericOAuthenticator.token_url
     default: "https://auth.molgenis.org/oauth2/token"
     description: "Authentication server token endpoint"
     type: string
     required: true
     label: Token endpoint
-    group: Environment
-  - variable: jupyterhub.hub.extraEnv.OAUTH_CALLBACK_URL
+    group: Authentication
+  - variable: jupyterhub.config.GenericOAuthenticator.userdata_url
+    default: "https://auth.molgenis.org/oauth2/userinfo"
+    description: "Authentication server userinfo endpoint"
+    type: string
+    required: true
+    label: Userinfo endpoint
+    group: Authentication
+  - variable: jupyterhub.config.GenericOAuthenticator.oauth_callback_url
     default: "https://jupyter.molgenis.org/hub/oauth_callback"
     description: "Callback endpoint of the JupyterHub"
     type: string
     required: true
     label: Callback endpoint (JupyterHub)
-    group: Environment
-  - variable: jupyterhub.auth.custom.config.login_service
+    group: Authentication
+  - variable: jupyterhub.config.GenericOAuthenticator.login_service
     default: "MOLGENIS"
     description: "Name of the authentication service"
     type: string
     required: true
     label: Service name
     group: Authentication
-  - variable: jupyterhub.auth.custom.config.client_id
-    default: "xxxxx-xxxx-xxxxx-xxxxxx"
+  - variable: jupyterhub.config.GenericOAuthenticator.client_id
+    default: "xxxxxxx-xxxxxxxxx-xxxxxxx"
     description: "Client ID of the authentication service"
     type: string
     required: true
     label: Client ID
     group: Authentication
-  - variable: jupyterhub.auth.custom.config.cient_secret
-    default: "xxxxx-xxxx-xxxxx-xxxxxxxxx-xxxxxxx"
+  - variable: jupyterhub.config.GenericOAuthenticator.client_secret
+    default: "xxxxxxx-xxxxxxxxx-xxxxxxx"
     description: "Client secret of the authentication service"
     type: string
     required: true
     label: Client secret
     group: Authentication
-  - variable: jupyterhub.auth.custom.config.token_url
-    default: "https://auth.molgenis.org/oauth2/token"
-    description: "Authentication server token endpoint"
-    type: string
-    required: true
-    label: Token endpoint
-    group: Authentication
-  - variable: jupyterhub.auth.custom.config.userdata_url
-    default: "https://auth.molgenis.org/oauth2/userinfo"
-    description: "Authentication server userinfo endpoint"
-    type: string
-    required: true
-    label: Token endpoint
-    group: Authentication
-  

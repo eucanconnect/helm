@@ -5,14 +5,37 @@ jupyterhub:
     - jupyter.edge.molgenis.org
   
   hub:
+    # experiment as an admin on jupyter hub
+    config:
+      JupyterHub:
+        admin_access: true
+        authenticator_class: generic-oauth
+      Authenticator:
+        allowed_users:
+        admin_users: 
+        auto_login: true
+      GenericOAuthenticator:
+        client_id: xxxxxxx-xxxxxxxxx-xxxxxxx
+        client_secret: xxxxxxx-xxxxxxxxx-xxxxxxx
+        login_service: fusionauth
+        authorize_url: https://auth.molgenis.org/oauth2/authorize
+        token_url: https://auth.molgenis.org/oauth2/token
+        userdata_url: https://auth.molgenis.org/oauth2/userinfo
+        userdata_method: GET      
+        username_key: email
+        oauth_callback_url: http://127.0.0.1/hub/oauth_callback
+        scope: 
+         - openid
+         - name
+         - profile
+         - email
+
+    # end admin block
     extraConfig: 
         customPodHook: |
           c.DockerSpawner.extra_create_kwargs = {"command": 'env PATH="/opt/conda/bin:$PATH" /usr/local/bin/start-singleuser.sh'}
-    extraEnv:
-      OAUTH2_AUTHORIZE_URL: https://auth.molgenis.org/oauth2/authorize
-      OAUTH2_TOKEN_URL: https://auth.molgenis.org/oauth2/token
-      OAUTH_CALLBACK_URL: https://jupyter.edge.molgenis.org/hub/oauth_callback
-
+    
+     
   singleuser:
     image:
       name: molgenis/rstudio-jupyter
@@ -29,29 +52,12 @@ jupyterhub:
     profileList:
     - display_name: "DataSHIELD - default"
       description: "RStudio analysis environment with DataSHIELD (v6.0.1)"
-      default: true
+      kubespawner_override:
+        image: molgenis/rstudio-jupyter:1.1.0
     - display_name: "DataSHIELD - v6.1"
       description: "RStudio analysis environment with DataSHIELD (v6.1.0)"
       kubespawner_override:
         image: molgenis/rstudio-jupyter:1.2.0
 
-  auth:
-    type: custom
-    scopes: # that is essential to request certain scope, otherwise user profile call won't return anything
-    - "openid"
-    - "name"
-    - "profile"
-    - "email"
-    custom:
-      className: oauthenticator.generic.GenericOAuthenticator
-      config:
-        login_service: "MOLGENIS"
-        client_id: "xxxxx-xxxx-xxxxx-xxxxxx"
-        client_secret: "xxxxx-xxxx-xxxxx-xxxxxxxxx-xxxxxxx"
-        token_url: https://auth.molgenis.org/oauth2/token
-        userdata_url: https://auth.molgenis.org/oauth2/userinfo
-        userdata_method: GET
-        username_key: email
-
   proxy:
-    secretToken: <generate this using "openssl rand -hex 32">
+    secretToken: e1d355bcd03343ea78b45d7d381b43b5a70180d80fa883961d58e6342e5c3720
