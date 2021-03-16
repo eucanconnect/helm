@@ -2,7 +2,7 @@ categories:
   - JupyterHub
 questions:
   - variable: jupyterhub.ingress.host
-    default: "analysis.molgenis.org"
+    default: "jupyter.molgenis.org"
     description: "JupyterHub hostname"
     type: hostname
     required: true
