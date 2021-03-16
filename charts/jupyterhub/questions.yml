@@ -1,5 +1,5 @@
 categories:
-  - JupytorHub
+  - JupyterHub
 questions:
   - variable: jupyterhub.ingress.host
     default: "analysis.molgenis.org"
