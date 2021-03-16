@@ -11,8 +11,10 @@ jupyterhub:
         admin_access: true
         authenticator_class: generic-oauth
       Authenticator:
-        allowed_users:
-        admin_users: 
+      #   allowed_users:
+      #     - user@example.org
+      #   admin_users: 
+      #     - user@example.org
         auto_login: true
       GenericOAuthenticator:
         client_id: xxxxxxx-xxxxxxxxx-xxxxxxx
@@ -60,4 +62,4 @@ jupyterhub:
         image: molgenis/rstudio-jupyter:1.2.0
 
   proxy:
-    secretToken: e1d355bcd03343ea78b45d7d381b43b5a70180d80fa883961d58e6342e5c3720
+    secretToken: xxxxxxxx-xxxxxxxxxx-xxxxxxxx
