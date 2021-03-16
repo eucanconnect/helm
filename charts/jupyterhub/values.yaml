@@ -61,7 +61,7 @@ jupyterhub:
       kubespawner_override:
         image: molgenis/rstudio-jupyter:1.2.0
     - display_name: "DataSHIELD - dsBase v6.1 / dsExposome v1.0"
-      description: "RStudio analysis environment with DataSHIELD | dsBase (v6.1.0) and dsExposome (v1.0.1)"
+      description: "RStudio analysis environment with DataSHIELD | dsBase (v6.1.0) | dsExposome (v1.0.1)"
       kubespawner_override:
         image: molgenis/rstudio-jupyter:1.3.0
 
