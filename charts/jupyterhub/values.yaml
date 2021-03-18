@@ -11,14 +11,14 @@ jupyterhub:
         admin_access: true
         authenticator_class: generic-oauth
       Authenticator:
-      #   allowed_users:
-      #     - user@example.org
-      #   admin_users: 
-      #     - user@example.org
+        allowed_users:
+          - s.haakma@umcg.nl
+        admin_users: 
+          - s.haakma@umcg.nl
         auto_login: true
       GenericOAuthenticator:
-        client_id: xxxxxxx-xxxxxxxxx-xxxxxxx
-        client_secret: xxxxxxx-xxxxxxxxx-xxxxxxx
+        client_id: xxxxxxxxx-xxxxxxxxx-xxxxxxxxxx
+        client_secret: xxxxxxxxx-xxxxxxxxx-xxxxxxxxxx
         login_service: fusionauth
         authorize_url: https://auth.molgenis.org/oauth2/authorize
         token_url: https://auth.molgenis.org/oauth2/token
@@ -32,10 +32,10 @@ jupyterhub:
          - profile
          - email
 
-    # end admin block
-    extraConfig: 
-        customPodHook: |
-          c.DockerSpawner.extra_create_kwargs = {"command": 'env PATH="/opt/conda/bin:$PATH" /usr/local/bin/start-singleuser.sh'}
+    # # end admin block
+    # extraConfig: 
+    #     customPodHook: |
+    #       c.DockerSpawner.extra_create_kwargs = {"command": 'env PATH="/opt/conda/bin:$PATH" /usr/local/bin/start-singleuser.sh'}
     
   singleuser:
     image:
@@ -46,7 +46,8 @@ jupyterhub:
       guarantee: 1
     memory:
       limit: 1G
-      guarantee: 512M
+      guarantee: 1G
+    startTimeout: 300
     extraEnv:
       PASSWORD: "admin"
       USER: "rstudio"
@@ -62,7 +63,7 @@ jupyterhub:
     - display_name: "DataSHIELD - dsBase v6.1 / dsExposome v1.0"
       description: "RStudio analysis environment with DataSHIELD | dsBase (v6.1.0) | dsExposome (v1.0.1)"
       kubespawner_override:
-        image: molgenis/rstudio-jupyter:1.3.0
+        image: molgenis/rstudio-jupyter:1.3.3
 
   proxy:
-    secretToken: xxxxxxxx-xxxxxxxxxx-xxxxxxxx
+    secretToken: xxxxxxxxxxxxxxxxxxxxxxxxxx
