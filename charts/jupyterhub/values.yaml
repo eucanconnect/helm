@@ -15,11 +15,11 @@ jupyterhub:
           - s.haakma@umcg.nl
         admin_users: 
           - s.haakma@umcg.nl
-        auto_login: true
+        auto_login: false
       GenericOAuthenticator:
-        client_id: xxxxxxxxx-xxxxxxxxx-xxxxxxxxxx
-        client_secret: xxxxxxxxx-xxxxxxxxx-xxxxxxxxxx
-        login_service: fusionauth
+        client_id: xxxxxxxxxx-xxxxxxxxxxx-xxxxxxxxxxxx
+        client_secret: xxxxxxxxxx-xxxxxxxxxxx-xxxxxxxxxxxx
+        login_service: LifeCycle
         authorize_url: https://auth.molgenis.org/oauth2/authorize
         token_url: https://auth.molgenis.org/oauth2/token
         userdata_url: https://auth.molgenis.org/oauth2/userinfo
@@ -32,11 +32,6 @@ jupyterhub:
          - profile
          - email
 
-    # # end admin block
-    # extraConfig: 
-    #     customPodHook: |
-    #       c.DockerSpawner.extra_create_kwargs = {"command": 'env PATH="/opt/conda/bin:$PATH" /usr/local/bin/start-singleuser.sh'}
-    
   singleuser:
     image:
       name: molgenis/rstudio-jupyter
@@ -66,4 +61,4 @@ jupyterhub:
         image: molgenis/rstudio-jupyter:1.3.3
 
   proxy:
-    secretToken: xxxxxxxxxxxxxxxxxxxxxxxxxx
+    secretToken: xxxxxxxxxx-xxxxxxxxxxx-xxxxxxxxxxxx
